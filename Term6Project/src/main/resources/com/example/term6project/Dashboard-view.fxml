@@ -1,16 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.term6project.CustomerController">
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-  </padding>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
-  <Label fx:id="welcomeText"/>
-  <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.term6project.DashboardController">
+   <left>
+      <VBox prefHeight="400.0" prefWidth="174.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnCustomer" mnemonicParsing="false" onAction="#handleCustomerButtonClick" prefHeight="52.0" prefWidth="174.0" text="Customer" textFill="#2f4b1c">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant>
+                           <color>
+                              <Color red="0.992222249507904" green="0.9888888597488403" blue="1.0" />
+                           </color>
+                        </Light.Distant>
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+            <Button fx:id="btnCustomer1" mnemonicParsing="false" onAction="#handleBoookingButtonClick" prefHeight="52.0" prefWidth="174.0" text="Booking" textFill="#2f4b1c">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant>
+                           <color>
+                              <Color red="0.992222249507904" green="0.9888888597488403" blue="1.0" />
+                           </color>
+                        </Light.Distant>
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+            <Button fx:id="btnCustomer2" mnemonicParsing="false" onAction="#handlePackageButtonClick" prefHeight="52.0" prefWidth="174.0" text="Package" textFill="#2f4b1c">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant>
+                           <color>
+                              <Color red="0.992222249507904" green="0.9888888597488403" blue="1.0" />
+                           </color>
+                        </Light.Distant>
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+            <Button fx:id="btnCustomer3" mnemonicParsing="false" onAction="#handleProductButtonClick" prefHeight="52.0" prefWidth="174.0" text="Product" textFill="#2f4b1c">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant>
+                           <color>
+                              <Color red="0.992222249507904" green="0.9888888597488403" blue="1.0" />
+                           </color>
+                        </Light.Distant>
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+   <top>
+      <Label text="Dashboard" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+   </top>
+</BorderPane>
