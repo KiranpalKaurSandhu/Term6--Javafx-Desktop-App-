@@ -1,5 +1,5 @@
 /**
- * Sample Skeleton for 'TravelPackage-view.fxml' Controller Class
+ * Sample Skeleton for 'Supplier-view.fxml' Controller Class
  */
 
 package com.example.term6project;
@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 
-public class TravelPackageController {
+public class SupplierController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
