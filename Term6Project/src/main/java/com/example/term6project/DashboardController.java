@@ -6,11 +6,8 @@
  */
 
 package com.example.term6project;
-
-<<<<<<< HEAD
-=======
 import java.io.FileInputStream;
->>>>>>> 143f4281a26278701687c34e33de8ffae6a424f3
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -27,14 +24,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-<<<<<<< HEAD
-=======
+
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
->>>>>>> 143f4281a26278701687c34e33de8ffae6a424f3
+
 import javafx.stage.Stage;
 
 public class DashboardController {
@@ -98,33 +94,10 @@ public class DashboardController {
 
     @FXML
     void handleProductButtonClick(ActionEvent event) {
-        try {
-            // Create an instance of the ProductController
-            ProductController productController = new ProductController();
 
-            // Load the Product view (FXML) and associate it with the ProductController
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Product-view.fxml"));
-            loader.setController(productController); // Set the controller
-
-            // Load the Product view
-            Parent productView = loader.load();
-
-            // Create a new scene with the Product view
-            Scene productScene = new Scene(productView);
-
-            // Get the current stage (window)
-            Stage currentStage = (Stage) btnCustomer.getScene().getWindow();
-
-            // Set the scene to the stage
-            currentStage.setScene(productScene);
-
-            // Show the stage
-            currentStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
-    }
+
 
     ObservableList<Booking> data = FXCollections.observableArrayList();
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -254,7 +227,7 @@ public class DashboardController {
 
         try
         {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
             Properties p = new Properties();
             p.load(fis);
             url = (String) p.get("url");

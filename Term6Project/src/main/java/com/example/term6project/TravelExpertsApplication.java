@@ -12,7 +12,7 @@ public class TravelExpertsApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(TravelExpertsApplication.class.getResource("Dashboard-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
+        stage.setTitle("Travel Experts");
         stage.setScene(scene);
         stage.show();
     }
