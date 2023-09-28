@@ -53,7 +53,7 @@ public class DashboardController {
     @FXML
     void handleProductButtonClick(ActionEvent event) {
         try {
-            // Create an instance of the ProductController (or use the reference you have)
+            // Create an instance of the ProductController
             ProductController productController = new ProductController();
 
             // Load the Product view (FXML) and associate it with the ProductController

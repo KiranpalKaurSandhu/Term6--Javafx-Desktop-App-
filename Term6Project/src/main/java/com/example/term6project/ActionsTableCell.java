@@ -11,13 +11,13 @@ public class ActionsTableCell<S> extends TableCell<S, Void> {
     public ActionsTableCell() {
         // Add action handlers for Edit and Delete buttons
         editButton.setOnAction(event -> {
-            // Handle edit action (e.g., open an edit dialog for the selected row)
+            // Handle edit action
             S rowData = getTableView().getItems().get(getIndex());
             // Implement edit logic here
         });
 
         deleteButton.setOnAction(event -> {
-            // Handle delete action (e.g., prompt for confirmation and delete the selected row)
+            // Handle delete action
             S rowData = getTableView().getItems().get(getIndex());
             // Implement delete logic here
         });
