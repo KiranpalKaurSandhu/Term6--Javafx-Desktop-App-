@@ -4,11 +4,16 @@
 
 package com.example.term6project;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class DashboardController {
 
@@ -47,6 +52,31 @@ public class DashboardController {
 
     @FXML
     void handleProductButtonClick(ActionEvent event) {
+        try {
+            // Create an instance of the ProductController (or use the reference you have)
+            ProductController productController = new ProductController();
+
+            // Load the Product view (FXML) and associate it with the ProductController
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Product-view.fxml"));
+            loader.setController(productController); // Set the controller
+
+            // Load the Product view
+            Parent productView = loader.load();
+
+            // Create a new scene with the Product view
+            Scene productScene = new Scene(productView);
+
+            // Get the current stage (window)
+            Stage currentStage = (Stage) btnCustomer.getScene().getWindow();
+
+            // Set the scene to the stage
+            currentStage.setScene(productScene);
+
+            // Show the stage
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
