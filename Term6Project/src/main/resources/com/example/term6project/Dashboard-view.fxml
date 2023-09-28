@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.Light.Distant?>
 <?import javafx.scene.effect.Lighting?>
 <?import javafx.scene.effect.Shadow?>
@@ -10,12 +12,11 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.term6project.DashboardController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="937.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.term6project.DashboardController">
    <left>
-      <VBox prefHeight="400.0" prefWidth="174.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="464.0" prefWidth="118.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnCustomer" mnemonicParsing="false" onAction="#handleCustomerButtonClick" prefHeight="52.0" prefWidth="174.0" text="Customer" textFill="#2f4b1c">
+            <Button fx:id="btnCustomer" mnemonicParsing="false" onAction="#handleCustomerButtonClick" prefHeight="52.0" prefWidth="116.0" text="Customer" textFill="#2f4b1c">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
@@ -34,7 +35,7 @@
                   </Lighting>
                </effect>
             </Button>
-            <Button fx:id="btnCustomer1" mnemonicParsing="false" onAction="#handleBoookingButtonClick" prefHeight="52.0" prefWidth="174.0" text="Booking" textFill="#2f4b1c">
+            <Button fx:id="btnSupplier" mnemonicParsing="false" onAction="#handleBoookingButtonClick" prefHeight="52.0" prefWidth="116.0" text="Supplier" textFill="#2f4b1c">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
@@ -53,7 +54,7 @@
                   </Lighting>
                </effect>
             </Button>
-            <Button fx:id="btnCustomer2" mnemonicParsing="false" onAction="#handlePackageButtonClick" prefHeight="52.0" prefWidth="174.0" text="Package" textFill="#2f4b1c">
+            <Button fx:id="btnPackage" mnemonicParsing="false" onAction="#handlePackageButtonClick" prefHeight="52.0" prefWidth="116.0" text="Package" textFill="#2f4b1c">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
@@ -72,7 +73,7 @@
                   </Lighting>
                </effect>
             </Button>
-            <Button fx:id="btnCustomer3" mnemonicParsing="false" onAction="#handleProductButtonClick" prefHeight="52.0" prefWidth="174.0" text="Product" textFill="#2f4b1c">
+            <Button fx:id="btnProduct" mnemonicParsing="false" onAction="#handleProductButtonClick" prefHeight="52.0" prefWidth="116.0" text="Product" textFill="#2f4b1c">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
@@ -101,4 +102,17 @@
          </font>
       </Label>
    </top>
+   <center>
+      <TableView fx:id="tvBooking" prefHeight="514.0" prefWidth="690.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="colBookingId" prefWidth="70.40002286434174" text="Booking Id" />
+          <TableColumn fx:id="colBookingDate" prefWidth="159.20003509521484" text="Booking Date" />
+            <TableColumn fx:id="colBookingNo" prefWidth="101.5999755859375" text="Booking No." />
+            <TableColumn fx:id="colTravelerCount" prefWidth="104.0" text="Traveler Count" />
+            <TableColumn fx:id="colCustomerId" prefWidth="89.60000610351562" text="Customer Id" />
+            <TableColumn fx:id="colTripTypeId" prefWidth="87.99993896484375" text="Trip Type Id" />
+            <TableColumn fx:id="colPackageId" prefWidth="115.20001220703125" text="PackageId" />
+        </columns>
+      </TableView>
+   </center>
 </BorderPane>
