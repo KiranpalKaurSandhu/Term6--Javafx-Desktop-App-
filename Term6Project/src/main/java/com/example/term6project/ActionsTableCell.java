@@ -1,5 +1,7 @@
 package com.example.term6project;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.layout.HBox;
@@ -10,17 +12,22 @@ public class ActionsTableCell<S> extends TableCell<S, Void> {
 
     public ActionsTableCell() {
         // Add action handlers for Edit and Delete buttons
-        editButton.setOnAction(event -> {
-            // Handle edit action
-            S rowData = getTableView().getItems().get(getIndex());
-            // Implement edit logic here
+
+        editButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                S rowData = getTableView().getItems().get(getIndex());
+            }
         });
 
-        deleteButton.setOnAction(event -> {
-            // Handle delete action
-            S rowData = getTableView().getItems().get(getIndex());
-            // Implement delete logic here
+        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                // Handle delete action
+                S rowData = getTableView().getItems().get(getIndex());
+            }
         });
+
     }
 
     @Override
