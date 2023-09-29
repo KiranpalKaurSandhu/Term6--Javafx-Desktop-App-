@@ -4,3 +4,12 @@
 .button:hover{
     -fx-background-color: white;
 }
+/* Define styles for even rows */
+.table-view .row-cell:even {
+    -fx-background-color: #FFFFFF; /* White */
+}
+
+/* Define styles for odd rows */
+.table-view .row-cell:odd {
+    -fx-background-color: #E0E0E0; /* Light Grey */
+}

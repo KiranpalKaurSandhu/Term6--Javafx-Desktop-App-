@@ -15,15 +15,13 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 
@@ -39,20 +37,43 @@ public class DashboardController {
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
-    @FXML // fx:id="btnAdd"
-    private Button btnAdd; // Value injected by FXMLLoader
+
+
+    @FXML // fx:id="btnAddBookings"
+    private Button btnAddBookings; // Value injected by FXMLLoader
+
+    @FXML // fx:id="btnAddCustomers"
+    private Button btnAddCustomers; // Value injected by FXMLLoader
+
+    @FXML // fx:id="btnAddPackages"
+    private Button btnAddPackages; // Value injected by FXMLLoader
+
+    @FXML // fx:id="btnAddProducts"
+    private Button btnAddProducts; // Value injected by FXMLLoader
+
+    @FXML // fx:id="btnAddSuppliers"
+    private Button btnAddSuppliers; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnBookings"
     private Button btnBookings; // Value injected by FXMLLoader
 
-    @FXML // fx:id="btnCancel"
-    private Label btnCancel; // Value injected by FXMLLoader
-
     @FXML // fx:id="btnCustomers"
     private Button btnCustomers; // Value injected by FXMLLoader
 
-    @FXML // fx:id="btnEdit"
-    private Button btnEdit; // Value injected by FXMLLoader
+    @FXML // fx:id="btnEditBookings"
+    private Button btnEditBookings; // Value injected by FXMLLoader
+
+    @FXML // fx:id="btnEditCustomers"
+    private Button btnEditCustomers; // Value injected by FXMLLoader
+
+    @FXML // fx:id="btnEditPackages"
+    private Button btnEditPackages; // Value injected by FXMLLoader
+
+    @FXML // fx:id="btnEditProducts"
+    private Button btnEditProducts; // Value injected by FXMLLoader
+
+    @FXML // fx:id="btnEditSuppliers"
+    private Button btnEditSuppliers; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnPackages"
     private Button btnPackages; // Value injected by FXMLLoader
@@ -230,11 +251,19 @@ public class DashboardController {
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
+
+        assert btnAddBookings != null : "fx:id=\"btnAddBookings\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
+        assert btnAddCustomers != null : "fx:id=\"btnAddCustomers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
+        assert btnAddPackages != null : "fx:id=\"btnAddPackages\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
+        assert btnAddProducts != null : "fx:id=\"btnAddProducts\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
+        assert btnAddSuppliers != null : "fx:id=\"btnAddSuppliers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnBookings != null : "fx:id=\"btnBookings\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
-        assert btnCancel != null : "fx:id=\"btnCancel\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnCustomers != null : "fx:id=\"btnCustomers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
-        assert btnEdit != null : "fx:id=\"btnEdit\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
+        assert btnEditBookings != null : "fx:id=\"btnEditBookings\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
+        assert btnEditCustomers != null : "fx:id=\"btnEditCustomers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
+        assert btnEditPackages != null : "fx:id=\"btnEditPackages\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
+        assert btnEditProducts != null : "fx:id=\"btnEditProducts\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
+        assert btnEditSuppliers != null : "fx:id=\"btnEditSuppliers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnPackages != null : "fx:id=\"btnPackages\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnProducts != null : "fx:id=\"btnProducts\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnSuppliers != null : "fx:id=\"btnSuppliers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
@@ -248,6 +277,7 @@ public class DashboardController {
         assert tvPackages != null : "fx:id=\"tvPackages\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert tvProducts != null : "fx:id=\"tvProducts\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert tvSuppliers != null : "fx:id=\"tvSuppliers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
+
 
         // Initialize your controller (e.g., hide all GridPanes except the default one).
         pnPackages.setVisible(true);
