@@ -1,118 +1,237 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.effect.Light.Distant?>
-<?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.effect.Shadow?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="937.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.term6project.DashboardController">
-   <left>
-      <VBox prefHeight="464.0" prefWidth="118.0" BorderPane.alignment="CENTER">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.term6project.DashboardController">
+   <children>
+      <VBox prefHeight="560.0" prefWidth="183.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="657.8">
          <children>
-            <Button fx:id="btnCustomer" mnemonicParsing="false" onAction="#handleCustomerButtonClick" prefHeight="52.0" prefWidth="116.0" text="Customer" textFill="#2f4b1c">
+            <Pane prefHeight="112.0" prefWidth="170.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="39.0" text="Travel Experts">
+                     <font>
+                        <Font name="System Bold Italic" size="24.0" />
+                     </font>
+                     <textFill>
+                        <RadialGradient centerX="0.506607895905751" centerY="0.5643939258474292" radius="0.5">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="0.9905555844306946" blue="0.9370370507240295" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </RadialGradient>
+                     </textFill>
+                  </Label>
+               </children>
+            </Pane>
+            <Button fx:id="btnPackages" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleBtnPackages" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: grey;" text="Packages" textFill="WHITE">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
                <font>
-                  <Font name="Arial Bold" size="18.0" />
+                  <Font name="Baskerville Old Face" size="24.0" />
                </font>
-               <effect>
-                  <Lighting>
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant>
-                           <color>
-                              <Color red="0.992222249507904" green="0.9888888597488403" blue="1.0" />
-                           </color>
-                        </Light.Distant>
-                     </light>
-                  </Lighting>
-               </effect>
             </Button>
-            <Button fx:id="btnSupplier" mnemonicParsing="false" onAction="#handleBoookingButtonClick" prefHeight="52.0" prefWidth="116.0" text="Supplier" textFill="#2f4b1c">
+            <Button fx:id="btnProducts" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleBtnProducts" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: grey;" text="Products" textFill="WHITE">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
                <font>
-                  <Font name="Arial Bold" size="18.0" />
+                  <Font name="Baskerville Old Face" size="24.0" />
                </font>
-               <effect>
-                  <Lighting>
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant>
-                           <color>
-                              <Color red="0.992222249507904" green="0.9888888597488403" blue="1.0" />
-                           </color>
-                        </Light.Distant>
-                     </light>
-                  </Lighting>
-               </effect>
             </Button>
-            <Button fx:id="btnPackage" mnemonicParsing="false" onAction="#handlePackageButtonClick" prefHeight="52.0" prefWidth="116.0" text="Package" textFill="#2f4b1c">
+            <Button fx:id="btnSuppliers" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleBtnSuppliers" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: grey;" text="Suppliers" textFill="WHITE">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
                <font>
-                  <Font name="Arial Bold" size="18.0" />
+                  <Font name="Baskerville Old Face" size="24.0" />
                </font>
-               <effect>
-                  <Lighting>
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant>
-                           <color>
-                              <Color red="0.992222249507904" green="0.9888888597488403" blue="1.0" />
-                           </color>
-                        </Light.Distant>
-                     </light>
-                  </Lighting>
-               </effect>
             </Button>
-            <Button fx:id="btnProduct" mnemonicParsing="false" onAction="#handleProductButtonClick" prefHeight="52.0" prefWidth="116.0" text="Product" textFill="#2f4b1c">
+            <Button fx:id="btnCustomers" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleBtnCustomers" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: grey;" text="Customers" textFill="WHITE">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
                <font>
-                  <Font name="Arial Bold" size="18.0" />
+                  <Font name="Baskerville Old Face" size="24.0" />
                </font>
-               <effect>
-                  <Lighting>
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant>
-                           <color>
-                              <Color red="0.992222249507904" green="0.9888888597488403" blue="1.0" />
-                           </color>
-                        </Light.Distant>
-                     </light>
-                  </Lighting>
-               </effect>
+            </Button>
+            <Button fx:id="btnBookings" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleBtnBookings" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: grey;" text="Bookings" textFill="WHITE">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font name="Baskerville Old Face" size="24.0" />
+               </font>
             </Button>
          </children>
       </VBox>
-   </left>
-   <top>
-      <Label text="Dashboard" BorderPane.alignment="CENTER">
+      <VBox layoutX="183.0" layoutY="54.0" prefHeight="370.0" prefWidth="656.0">
+         <children>
+            <StackPane prefHeight="394.0" prefWidth="656.0">
+               <children>
+                  <GridPane fx:id="pnPackages" prefHeight="417.0" prefWidth="646.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="190.79996337890626" minHeight="10.0" prefHeight="58.39998168945313" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="368.6000244140625" minHeight="10.0" prefHeight="333.6000183105469" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <TableView fx:id="tvPackages" prefHeight="294.0" prefWidth="634.0" GridPane.rowIndex="1">
+                           <columns>
+                              <TableColumn fx:id="colPackagePackageId" prefWidth="75.0" text="PackageId" />
+                              <TableColumn fx:id="colPkgName" prefWidth="75.0" style="fx-background-color: grey;" text="PkgName" />
+                              <TableColumn fx:id="colPkgStartDate" prefWidth="75.0" style="fx-background-color: grey;" text="PkgStartDate" />
+                              <TableColumn fx:id="colPkgEndDate" prefWidth="75.0" style="fx-background-color: grey;" text="PkgEndDate" />
+                              <TableColumn fx:id="colPkgDesc" prefWidth="75.0" text="PkgDesc" />
+                              <TableColumn fx:id="colPkgBasePrice" prefWidth="75.0" style="fx-background-color: grey;" text="PkgBasePrice" />
+                              <TableColumn fx:id="colPkgAgencyCommission" prefWidth="75.0" style="fx-background-color: grey;" text="PkgAgencyCommission" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="pnProducts" prefHeight="417.0" prefWidth="646.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="190.79996337890626" minHeight="10.0" prefHeight="58.39998168945313" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="368.6000244140625" minHeight="10.0" prefHeight="333.6000183105469" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TableView fx:id="tvProducts" prefHeight="325.0" prefWidth="656.0" GridPane.rowIndex="1">
+                          <columns>
+                            <TableColumn fx:id="colProductId" prefWidth="75.0" text="ProductId" />
+                            <TableColumn fx:id="colProdName" prefWidth="75.0" style="fx-background-color: grey;" text="ProdName" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="pnSuppliers" prefHeight="417.0" prefWidth="646.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="190.79996337890626" minHeight="10.0" prefHeight="58.39998168945313" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="368.6000244140625" minHeight="10.0" prefHeight="333.6000183105469" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <TableView fx:id="tvSuppliers" prefHeight="294.0" prefWidth="634.0" GridPane.rowIndex="1">
+                           <columns>
+                              <TableColumn fx:id="colSupplierId" prefWidth="75.0" text="SupplierId" />
+                              <TableColumn fx:id="colSupName" prefWidth="75.0" style="fx-background-color: grey;" text="SupName" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="pnCustomers" prefHeight="417.0" prefWidth="646.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="190.79996337890626" minHeight="10.0" prefHeight="58.39998168945313" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="368.6000244140625" minHeight="10.0" prefHeight="333.6000183105469" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <TableView fx:id="tvCustomers" prefHeight="294.0" prefWidth="634.0" GridPane.rowIndex="1">
+                           <columns>
+                              <TableColumn fx:id="colCustomerCustomerId" prefWidth="75.0" text="CustomerId" />
+                              <TableColumn fx:id="colCustFirstName" prefWidth="75.0" style="fx-background-color: grey;" text="CustFirstName" />
+                              <TableColumn fx:id="colCustLastName" prefWidth="75.0" style="fx-background-color: grey;" text="CustLastName" />
+                              <TableColumn fx:id="colCustAddress" prefWidth="75.0" style="fx-background-color: grey;" text="CustAddress" />
+                              <TableColumn fx:id="colCustCity" prefWidth="75.0" style="fx-background-color: grey;" text="CustCity" />
+                              <TableColumn fx:id="colCustProv" prefWidth="75.0" style="fx-background-color: grey;" text="CustProv" />
+                              <TableColumn fx:id="colCustPostal" prefWidth="75.0" style="fx-background-color: grey;" text="CustPostal" />
+                              <TableColumn fx:id="colCustCountry" prefWidth="75.0" style="fx-background-color: grey;" text="CustCountry" />
+                              <TableColumn fx:id="colCustHomePhone" prefWidth="75.0" style="fx-background-color: grey;" text="CustHomePhone" />
+                              <TableColumn fx:id="colCustBusPhone" prefWidth="75.0" style="fx-background-color: grey;" text="CustBusPhone" />
+                              <TableColumn fx:id="colCustEmail" prefWidth="75.0" style="fx-background-color: grey;" text="CustEmail" />
+                              <TableColumn fx:id="colAgentId" prefWidth="75.0" style="fx-background-color: grey;" text="AgentId" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="pnBookings" prefHeight="417.0" prefWidth="646.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="190.79996337890626" minHeight="10.0" prefHeight="58.39998168945313" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="368.6000244140625" minHeight="10.0" prefHeight="333.6000183105469" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <TableView fx:id="tvBookings" prefHeight="294.0" prefWidth="634.0" GridPane.rowIndex="1">
+                           <columns>
+                              <TableColumn fx:id="colBookingId" prefWidth="94.40000915527344" text="BookingId" />
+                              <TableColumn fx:id="colBookingDate" prefWidth="95.199951171875" style="fx-background-color: grey;" text="BookingDate" />
+                              <TableColumn fx:id="colBookingNo" prefWidth="90.4000244140625" style="fx-background-color: grey;" text="BookingNo" />
+                              <TableColumn fx:id="colTravelerCount" prefWidth="89.5999755859375" style="fx-background-color: grey;" text="TravelerCount" />
+                              <TableColumn fx:id="colBookingCustomerId" prefWidth="76.0" style="fx-background-color: grey;" text="CustomerId" />
+                              <TableColumn fx:id="colTripTypeId" prefWidth="98.39996337890625" style="fx-background-color: grey;" text="TripTypeId" />
+                              <TableColumn fx:id="colBookingPackageId" prefWidth="112.0" style="fx-background-color: grey;" text="PackageId" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </GridPane>
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+      <HBox layoutX="183.0" layoutY="440.0" prefHeight="120.0" prefWidth="662.0" style="-fx-background-color: grey;">
+         <children>
+            <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: grey; -fx-border-color: white;" text="Add" textFill="WHITE">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="100.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnEdit" mnemonicParsing="false" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: grey; -fx-border-color: white;" text="Edit" textFill="#fffafa">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="100.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <Label fx:id="btnCancel" layoutX="820.0" layoutY="14.0" prefWidth="14.0" text="X" textFill="#0b0000">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-   </top>
-   <center>
-      <TableView fx:id="tvBooking" prefHeight="514.0" prefWidth="690.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn fx:id="colBookingId" prefWidth="70.40002286434174" text="Booking Id" />
-          <TableColumn fx:id="colBookingDate" prefWidth="159.20003509521484" text="Booking Date" />
-            <TableColumn fx:id="colBookingNo" prefWidth="101.5999755859375" text="Booking No." />
-            <TableColumn fx:id="colTravelerCount" prefWidth="104.0" text="Traveler Count" />
-            <TableColumn fx:id="colCustomerId" prefWidth="89.60000610351562" text="Customer Id" />
-            <TableColumn fx:id="colTripTypeId" prefWidth="87.99993896484375" text="Trip Type Id" />
-            <TableColumn fx:id="colPackageId" prefWidth="115.20001220703125" text="PackageId" />
-        </columns>
-      </TableView>
-   </center>
-</BorderPane>
+   </children>
+</AnchorPane>
