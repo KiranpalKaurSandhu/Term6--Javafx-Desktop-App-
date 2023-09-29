@@ -1,5 +1,5 @@
 /**
- * Sample Skeleton for 'Customer-view.fxml' Controller Class
+ * Sample Skeleton for 'AddCustomer-view.fxml' Controller Class
  */
 
 package com.example.term6project;

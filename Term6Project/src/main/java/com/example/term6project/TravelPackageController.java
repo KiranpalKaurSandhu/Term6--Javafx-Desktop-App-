@@ -1,5 +1,5 @@
 /**
- * Sample Skeleton for 'TravelPackage-view.fxml' Controller Class
+ * Sample Skeleton for 'AddPackage-view.fxml' Controller Class
  */
 
 package com.example.term6project;

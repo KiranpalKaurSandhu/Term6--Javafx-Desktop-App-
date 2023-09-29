@@ -1,5 +1,5 @@
 /**
- * Sample Skeleton for 'Booking-view.fxml' Controller Class
+ * Sample Skeleton for 'AddBooking-view.fxml' Controller Class
  */
 
 package com.example.term6project;

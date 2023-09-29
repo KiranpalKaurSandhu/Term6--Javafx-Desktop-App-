@@ -115,7 +115,7 @@
                         </TableView>
                         <HBox prefHeight="50.0" prefWidth="658.0">
                            <children>
-                              <Button fx:id="btnAddPackages" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: grey;" text="Add" textFill="WHITE">
+                              <Button fx:id="btnAddPackages" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: grey;" text="Add" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                                  </HBox.margin>
@@ -126,7 +126,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="btnEditPackages" mnemonicParsing="false" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: grey;" text="Edit" textFill="WHITE">
+                              <Button fx:id="btnEditPackages" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: grey;" text="Edit" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                                  </HBox.margin>
@@ -158,7 +158,7 @@
                         </TableView>
                         <HBox prefHeight="50.0" prefWidth="658.0">
                            <children>
-                              <Button fx:id="btnAddProducts" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: grey;" text="Add" textFill="WHITE">
+                              <Button fx:id="btnAddProducts" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: grey;" text="Add" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                                  </HBox.margin>
@@ -169,7 +169,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="btnEditProducts" mnemonicParsing="false" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: grey;" text="Edit" textFill="WHITE">
+                              <Button fx:id="btnEditProducts" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: grey;" text="Edit" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                                  </HBox.margin>
@@ -201,7 +201,7 @@
                         </TableView>
                         <HBox prefHeight="50.0" prefWidth="658.0">
                            <children>
-                              <Button fx:id="btnAddSuppliers" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: grey;" text="Add" textFill="WHITE">
+                              <Button fx:id="btnAddSuppliers" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: grey;" text="Add" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                                  </HBox.margin>
@@ -212,7 +212,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="btnEditSuppliers" mnemonicParsing="false" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: grey;" text="Edit" textFill="WHITE">
+                              <Button fx:id="btnEditSuppliers" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: grey;" text="Edit" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                                  </HBox.margin>
@@ -254,7 +254,7 @@
                         </TableView>
                         <HBox prefHeight="50.0" prefWidth="658.0">
                            <children>
-                              <Button fx:id="btnAddCustomers" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: grey;" text="Add" textFill="WHITE">
+                              <Button fx:id="btnAddCustomers" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: grey;" text="Add" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                                  </HBox.margin>
@@ -265,7 +265,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="btnEditCustomers" mnemonicParsing="false" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: grey;" text="Edit" textFill="WHITE">
+                              <Button fx:id="btnEditCustomers" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: grey;" text="Edit" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                                  </HBox.margin>
@@ -302,7 +302,7 @@
                         </TableView>
                         <HBox prefHeight="50.0" prefWidth="658.0">
                            <children>
-                              <Button fx:id="btnAddBookings" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: grey;" text="Add" textFill="WHITE">
+                              <Button fx:id="btnAddBookings" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: grey;" text="Add" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                                  </HBox.margin>
@@ -313,7 +313,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="btnEditBookings" mnemonicParsing="false" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: grey;" text="Edit" textFill="WHITE">
+                              <Button fx:id="btnEditBookings" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: grey;" text="Edit" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                                  </HBox.margin>

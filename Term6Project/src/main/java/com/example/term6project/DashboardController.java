@@ -15,15 +15,23 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class DashboardController {
     /**
@@ -206,7 +214,7 @@ public class DashboardController {
     @FXML // fx:id="colCustomerId"
     private TableColumn<Booking, Integer> colBookingCustomerId; // Value injected by FXMLLoader
 
-
+    private String mode;
 
 
     @FXML
@@ -242,6 +250,94 @@ public class DashboardController {
         hideAllGridPanes();
         pnCustomers.setVisible(true);
     }
+    @FXML
+    void handleEditButton(ActionEvent event) {
+        String tableId = ((Button) event.getSource()).getId();
+        String dialogFXML = "";
+
+        switch (tableId) {
+            case "btnEditProducts":
+                dialogFXML = "AddProduct-view.fxml";
+                break;
+            case "btnEditSuppliers":
+                dialogFXML = "AddSupplier-view.fxml";
+                break;
+            case "btnEditBookings":
+                dialogFXML = "AddBooking-view.fxml";
+                break;
+            case "btnEditCustomers":
+                dialogFXML = "AddCustomer-view.fxml";
+                break;
+            case "btnEditPackages":
+                dialogFXML = "AddPackage-view.fxml";
+                break;
+
+        }
+
+        if (!dialogFXML.isEmpty()) {
+            openEditDialog(dialogFXML);
+        }
+    }
+    @FXML
+    void handleAddButton(ActionEvent event) {
+        String tableId = ((Button) event.getSource()).getId();
+        String dialogFXML = "";
+
+        switch (tableId) {
+            case "btnAddProducts":
+                dialogFXML = "AddProduct-view.fxml";
+                break;
+            case "btnAddSuppliers":
+                dialogFXML = "AddSupplier-view.fxml";
+                break;
+            case "btnAddBookings":
+                dialogFXML = "AddBooking-view.fxml";
+                break;
+            case "btnAddCustomers":
+                dialogFXML = "AddCustomer-view.fxml";
+                break;
+            case "btnAddPackages":
+                dialogFXML = "AddPackage-view.fxml";
+                break;
+        }
+
+        if (!dialogFXML.isEmpty()) {
+            openAddDialog(dialogFXML);
+        }
+    }
+
+    private void openAddDialog(String dialogFXML) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(dialogFXML));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    private void openEditDialog(String dialogFXML) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(dialogFXML));
+            Parent root = loader.load();
+
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private ObservableList<Booking> bookingData = FXCollections.observableArrayList();
     private ObservableList<Product> productData = FXCollections.observableArrayList();
@@ -279,7 +375,7 @@ public class DashboardController {
         assert tvSuppliers != null : "fx:id=\"tvSuppliers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
 
 
-        // Initialize your controller (e.g., hide all GridPanes except the default one).
+
         pnPackages.setVisible(true);
         pnProducts.setVisible(false);
         pnSuppliers.setVisible(false);
@@ -308,6 +404,7 @@ public class DashboardController {
         tvSuppliers.setItems(supplierData);
 
         colCustomerCustomerId.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
+        colCustFirstName.setCellValueFactory(new PropertyValueFactory<Customer, String>("custFirstName"));
         colCustLastName.setCellValueFactory(new PropertyValueFactory<Customer, String>("custLastName"));
         colCustAddress.setCellValueFactory(new PropertyValueFactory<Customer, String>("custAddress"));
         colCustCity.setCellValueFactory(new PropertyValueFactory<Customer, String>("custCity"));
@@ -338,7 +435,12 @@ public class DashboardController {
         fetchTableData("Customers", customerData);
         fetchTableData("Suppliers", supplierData);
 
+
+
+
+
     }
+
 
 
     // Helper method to hide all GridPanes.
@@ -395,5 +497,7 @@ public class DashboardController {
            throw new RuntimeException(e);
        }
    }
+
+
 }
 
