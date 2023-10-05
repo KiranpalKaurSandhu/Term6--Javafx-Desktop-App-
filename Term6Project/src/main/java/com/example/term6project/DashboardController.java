@@ -22,6 +22,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,6 +30,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -77,11 +79,8 @@ public class DashboardController {
     @FXML // fx:id="btnEditPackages"
     private Button btnEditPackages; // Value injected by FXMLLoader
 
-    @FXML // fx:id="btnEditProducts"
-    private Button btnEditProducts; // Value injected by FXMLLoader
-
-    @FXML // fx:id="btnEditSuppliers"
-    private Button btnEditSuppliers; // Value injected by FXMLLoader
+    @FXML // fx:id="btnAddProductSupplier"
+    private Button btnAddProductSupplier; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnPackages"
     private Button btnPackages; // Value injected by FXMLLoader
@@ -216,6 +215,23 @@ public class DashboardController {
 
     private String mode;
 
+    @FXML
+    void openAddProductSupplierView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddProductSupplier-view.fxml"));
+            Parent root = loader.load();
+            ProductSupplierController controller = loader.getController();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Add Product Supplier Relationship");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     @FXML
     void handleBtnPackages(ActionEvent event) {
@@ -256,12 +272,6 @@ public class DashboardController {
         String dialogFXML = "";
 
         switch (tableId) {
-            case "btnEditProducts":
-                dialogFXML = "AddProduct-view.fxml";
-                break;
-            case "btnEditSuppliers":
-                dialogFXML = "AddSupplier-view.fxml";
-                break;
             case "btnEditBookings":
                 dialogFXML = "AddBooking-view.fxml";
                 break;
@@ -273,7 +283,6 @@ public class DashboardController {
                 break;
 
         }
-
         if (!dialogFXML.isEmpty()) {
             openEditDialog(dialogFXML);
         }
@@ -327,14 +336,12 @@ public class DashboardController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(dialogFXML));
             Parent root = loader.load();
-
-
             Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL.APPLICATION_MODAL);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -358,11 +365,10 @@ public class DashboardController {
         assert btnEditBookings != null : "fx:id=\"btnEditBookings\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnEditCustomers != null : "fx:id=\"btnEditCustomers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnEditPackages != null : "fx:id=\"btnEditPackages\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
-        assert btnEditProducts != null : "fx:id=\"btnEditProducts\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
-        assert btnEditSuppliers != null : "fx:id=\"btnEditSuppliers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnPackages != null : "fx:id=\"btnPackages\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnProducts != null : "fx:id=\"btnProducts\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnSuppliers != null : "fx:id=\"btnSuppliers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
+        assert btnAddProductSupplier != null : "fx:id=\"btnAddProductSupplier\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert pnBookings != null : "fx:id=\"pnBookings\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert pnCustomers != null : "fx:id=\"pnCustomers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert pnPackages != null : "fx:id=\"pnPackages\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
@@ -398,10 +404,56 @@ public class DashboardController {
 
         tvProducts.setItems(productData);
 
+        btnAddProducts.setOnAction(event -> openProductDialog("add", null));
+
+
+        tvProducts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
+            @Override
+            public void changed(ObservableValue<? extends Product> observableValue, Product product, Product selectedProduct) {
+                if (tvProducts.getSelectionModel().isSelected(tvProducts.getSelectionModel().getSelectedIndex())) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            openProductDialog("edit", selectedProduct);
+                        }
+                    });
+                }
+            }
+        });
+
+        // Load Product Data
+        fetchTableData("Products", productData);
+
         colSupplierId.setCellValueFactory(new PropertyValueFactory<Supplier, Integer>("supplierId"));
         colSupName.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supName"));
 
         tvSuppliers.setItems(supplierData);
+
+        btnAddSuppliers.setOnAction(event -> openSupplierDialog("add", null));
+
+
+        tvSuppliers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Supplier>() {
+            @Override
+            public void changed(ObservableValue<? extends Supplier> observableValue, Supplier supplier, Supplier selectedSupplier) {
+                if (tvSuppliers.getSelectionModel().isSelected(tvSuppliers.getSelectionModel().getSelectedIndex())) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            openSupplierDialog("edit", selectedSupplier);
+                        }
+                    });
+                }
+            }
+        });
+        // Load Product Data
+        fetchTableData("Suppliers", supplierData);
+
+        btnAddProductSupplier.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                openAddProductSupplierView();
+            }
+        });
 
         colCustomerCustomerId.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
         colCustFirstName.setCellValueFactory(new PropertyValueFactory<Customer, String>("custFirstName"));
@@ -436,12 +488,52 @@ public class DashboardController {
         fetchTableData("Suppliers", supplierData);
 
 
-
-
-
     }
 
+    private void openProductDialog(String mode, Product product) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddProduct-view.fxml"));
+            Parent root = loader.load();
+            ProductController productController = loader.getController();
+            productController.passModeToDialog(mode);
+            productController.setMainController(this);
 
+            if (mode.equals("edit")) {
+                productController.loadData(product);
+            }
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle(mode.equals("add") ? "Add Product" : "Edit Product");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    private void openSupplierDialog(String mode, Supplier supplier) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddSupplier-view.fxml"));
+            Parent root = loader.load();
+            SupplierController supplierController = loader.getController();
+            supplierController.passModeToDialog(mode);
+            supplierController.setMainController(this);
+
+            if (mode.equals("edit")) {
+                supplierController.loadData(supplier);
+            }
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle(mode.equals("add") ? "Add Supplier" : "Edit Supplier");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     // Helper method to hide all GridPanes.
     private void hideAllGridPanes() {
@@ -499,5 +591,24 @@ public class DashboardController {
    }
 
 
+    public void refreshProductList() {
+        productData.clear();
+        fetchTableData("Products", productData);
+    }
+
+    public void refreshSupplierList() {
+        supplierData.clear();
+        fetchTableData("Suppliers", supplierData);
+    }
+
+    public void clearTableSelections() {
+        if (tvSuppliers != null && !tvSuppliers.getSelectionModel().isEmpty()) {
+            tvSuppliers.getSelectionModel().clearSelection();
+        }
+
+        if (tvProducts != null && !tvProducts.getSelectionModel().isEmpty()) {
+            tvProducts.getSelectionModel().clearSelection();
+        }
+    }
 }
 

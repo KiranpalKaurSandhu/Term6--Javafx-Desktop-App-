@@ -3,29 +3,29 @@ package com.example.term6project;
 import java.util.List;
 
 public class Product {
-    private int ProductId;
-    private String ProdName;
+    private int productId;
+    private String prodName;
     private List<ProductSupplier> productSuppliers; //Represents the Relationship with suppliers
 
     public Product(int productId, String prodName) {
-        this.ProductId = productId;
-        this.ProdName = prodName;
+        this.productId = productId;
+        this.prodName = prodName;
     }
     // Getter and setter for productSuppliers
     public int getProductId() {
-        return ProductId;
+        return productId;
     }
 
     public void setProductId(int productId) {
-        this.ProductId = productId;
+        this.productId = productId;
     }
 
     public String getProdName() {
-        return ProdName;
+        return prodName;
     }
 
     public void setProdName(String prodName) {
-        this.ProdName = prodName;
+        this.prodName = prodName;
     }
     // Getter and setter for productSuppliers
     public List<ProductSupplier> getProductSuppliers() {
@@ -39,6 +39,6 @@ public class Product {
     // Override toString method for displaying product name in UI components
     @Override
     public String toString() {
-        return  ProdName;
+        return  prodName;
     }
 }
