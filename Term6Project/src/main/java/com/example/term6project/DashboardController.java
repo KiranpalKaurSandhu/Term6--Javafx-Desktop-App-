@@ -480,6 +480,21 @@ public class DashboardController {
 
         tvPackages.setItems(packagesData);
 
+        tvPackages.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Packages>() {  //!!! greg, testing
+            @Override
+            public void changed(ObservableValue<? extends Packages> observableValue, Packages packageItem, Packages selectedPackage) {
+                if (tvPackages.getSelectionModel().isSelected(tvPackages.getSelectionModel().getSelectedIndex())) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            openPackageDialog("edit", selectedPackage);
+                        }
+                    });
+                }
+            }
+        });
+        //!!!
+
         // Call fetchTableData to populate data for each table
         fetchTableData("Bookings", bookingData);
         fetchTableData("Products", productData);
@@ -488,6 +503,31 @@ public class DashboardController {
         fetchTableData("Suppliers", supplierData);
 
 
+    }
+
+    private void openPackageDialog(String mode, Packages currentPackage) { //!!! greg, working on this - why doesn't it like 'package'?
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddPackage-view.fxml"));
+            Parent root = null;
+            root = loader.load();
+
+        TravelPackageController packageController = loader.getController();
+        packageController.passModeToDialog(mode);
+        packageController.setMainController(this);
+
+        if (mode.equals("edit")) {
+            packageController.populateEditForm(currentPackage);
+        }
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle(mode.equals("add") ? "Add Package" : "Edit Package");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void openProductDialog(String mode, Product product) {
@@ -550,7 +590,7 @@ public class DashboardController {
        String password = "";
 
        try {
-           FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+           FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
            Properties p = new Properties();
            p.load(fis);
            url = (String) p.get("url");
