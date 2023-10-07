@@ -53,7 +53,7 @@
       </VBox>
       <VBox layoutX="262.0" layoutY="74.0" prefHeight="200.0" prefWidth="151.0">
          <children>
-            <TextField fx:id="tfSupplierId">
+            <TextField fx:id="tfSupplierId" editable="false">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>

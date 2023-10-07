@@ -7,10 +7,7 @@ package com.example.term6project;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -108,11 +105,16 @@ public class SupplierController {
                 tfSupplierId.setDisable(true);
             } else {
                 // For inserting, include SupplierId (user input)
-                sql = "INSERT INTO `suppliers`(`SupplierId`, `SupName`) VALUES (?, ?)";
+                sql = "INSERT INTO `suppliers`( `SupplierId`, `SupName`) VALUES ( ?,?)";
                 stmt = conn.prepareStatement(sql);
-                stmt.setInt(1, Integer.parseInt(tfSupplierId.getText()));
+                // Query the maximum supplier ID and increment it by 1
+                int maxId = getMaxSupplierId(conn);
+                int newId = maxId + 1;
+
+                stmt.setInt(1, newId);
                 stmt.setString(2, tfSupplierName.getText());
             }
+
 
             int numRows = stmt.executeUpdate();
             if (numRows == 0) {
@@ -129,6 +131,19 @@ public class SupplierController {
             mainController.refreshSupplierList();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    // Helper method to get the maximum supplier ID from the table
+    private int getMaxSupplierId(Connection conn) throws SQLException {
+        String sql = "SELECT MAX(SupplierId) FROM suppliers";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            return rs.getInt(1);
+        } else {
+            return 0; // If there are no suppliers in the table yet
         }
     }
 
