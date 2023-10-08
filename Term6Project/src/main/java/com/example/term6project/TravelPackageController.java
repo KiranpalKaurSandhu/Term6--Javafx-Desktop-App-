@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 import java.text.SimpleDateFormat;//imported for start and end dates
 public class TravelPackageController {
     private String mode;    //!!!
@@ -94,8 +96,10 @@ public class TravelPackageController {
         txtAgencyComission.setText(strCommission);
     }
 
-    private void cancelBtnClicked(){    //!!!
-
+    @FXML
+    private void cancelBtnClicked(){    //close add/edit window
+        Stage stage = (Stage) btnCancel.getScene().getWindow();
+        stage.close();
     }
 
 }
