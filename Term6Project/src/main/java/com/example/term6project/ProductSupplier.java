@@ -2,16 +2,16 @@ package com.example.term6project;
 
 public class ProductSupplier {
     private int productSupplierId;
-    private Product product; // Reference to the associated product
-    private Supplier supplier; // Reference to the associated supplier
+    private String productName; // String to store the product name
+    private String supplierName; // String to store the supplier name
 
-    public ProductSupplier(int productSupplierId, Product product, Supplier supplier) {
+    public ProductSupplier(int productSupplierId, String productName, String supplierName) {
         this.productSupplierId = productSupplierId;
-        this.product = product;
-        this.supplier = supplier;
+        this.productName = productName;
+        this.supplierName = supplierName;
     }
 
-    // Getters and setters for productSupplierId, product, and supplier
+    // Getters and setters for productSupplierId, productName, and supplierName
     public int getProductSupplierId() {
         return productSupplierId;
     }
@@ -20,19 +20,20 @@ public class ProductSupplier {
         this.productSupplierId = productSupplierId;
     }
 
-    public Product getProduct() {
-        return product;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+    public String getSupplierName() {
+        return supplierName;
     }
 
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
     }
+
 }
