@@ -47,8 +47,6 @@ public class DashboardController {
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
-
-
     @FXML // fx:id="btnAddBookings"
     private Button btnAddBookings; // Value injected by FXMLLoader
 
@@ -406,6 +404,10 @@ public class DashboardController {
 
         btnAddProducts.setOnAction(event -> openProductDialog("add", null));
 
+        //testing !!!
+        btnAddPackages.setOnAction(event -> openPackageDialog("add", null));
+
+
 
         tvProducts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
             @Override
@@ -516,9 +518,10 @@ public class DashboardController {
         packageController.passModeToDialog(mode);
         packageController.setMainController(this);
 
-        if (mode.equals("edit")) {
+      /*  if (mode.equals("edit")) {
             packageController.populateEditForm(currentPackage);
-        }
+        }*/
+            packageController.passPackageAndMode(currentPackage, mode); //experimenting
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -630,7 +633,10 @@ public class DashboardController {
        }
    }
 
-
+    public void refreshPackageList() {
+        packagesData.clear();
+        fetchTableData("Packages", packagesData);
+    }
     public void refreshProductList() {
         productData.clear();
         fetchTableData("Products", productData);
