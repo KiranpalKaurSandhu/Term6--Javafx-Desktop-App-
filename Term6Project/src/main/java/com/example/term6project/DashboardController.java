@@ -593,7 +593,7 @@ public class DashboardController {
        String password = "";
 
        try {
-           FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
+           FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
            Properties p = new Properties();
            p.load(fis);
            url = (String) p.get("url");
