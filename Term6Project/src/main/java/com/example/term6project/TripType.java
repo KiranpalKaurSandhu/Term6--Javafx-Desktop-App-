@@ -25,4 +25,5 @@ public class TripType
     public void setTTName(String TTName) {
         this.TTName = TTName;
     }
+
 }

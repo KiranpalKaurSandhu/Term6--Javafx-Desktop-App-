@@ -68,9 +68,6 @@ public class DashboardController {
     @FXML // fx:id="btnCustomers"
     private Button btnCustomers; // Value injected by FXMLLoader
 
-    @FXML // fx:id="btnEditBookings"
-    private Button btnEditBookings; // Value injected by FXMLLoader
-
     @FXML // fx:id="btnEditCustomers"
     private Button btnEditCustomers; // Value injected by FXMLLoader
 
@@ -297,9 +294,9 @@ public class DashboardController {
             case "btnAddSuppliers":
                 dialogFXML = "AddSupplier-view.fxml";
                 break;
-            case "btnAddBookings":
-                dialogFXML = "AddBooking-view.fxml";
-                break;
+//            case "btnAddBookings":
+//                dialogFXML = "AddBooking-view.fxml";
+//                break;
             case "btnAddCustomers":
                 dialogFXML = "AddCustomer-view.fxml";
                 break;
@@ -360,7 +357,6 @@ public class DashboardController {
         assert btnAddSuppliers != null : "fx:id=\"btnAddSuppliers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnBookings != null : "fx:id=\"btnBookings\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnCustomers != null : "fx:id=\"btnCustomers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
-        assert btnEditBookings != null : "fx:id=\"btnEditBookings\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnEditCustomers != null : "fx:id=\"btnEditCustomers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnEditPackages != null : "fx:id=\"btnEditPackages\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnPackages != null : "fx:id=\"btnPackages\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
@@ -409,6 +405,10 @@ public class DashboardController {
 
 
 
+
+
+
+
         tvProducts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
             @Override
             public void changed(ObservableValue<? extends Product> observableValue, Product product, Product selectedProduct) {
@@ -447,6 +447,7 @@ public class DashboardController {
                 }
             }
         });
+
         // Load Product Data
         fetchTableData("Suppliers", supplierData);
 
@@ -454,6 +455,34 @@ public class DashboardController {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 openAddProductSupplierView();
+            }
+        });
+
+        //btnAddBookings.setOnAction(event -> openBookingDialog("add", null));
+        btnAddBookings.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                mode = "add";
+                openBookingDialog(mode, null);
+            }
+        });
+        tvBookings.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Booking>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends Booking> observableValue, Booking booking, Booking selectedBooking)
+            {
+                if(tvBookings.getSelectionModel().isSelected(tvBookings.getSelectionModel().getSelectedIndex()))
+                {
+                    Platform.runLater(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            mode = "edit";
+                            openBookingDialog("edit", selectedBooking);
+                        }
+                    });
+                }
             }
         });
 
@@ -535,7 +564,7 @@ public class DashboardController {
 
     private void openProductDialog(String mode, Product product) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddProduct-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(TravelExpertsApplication.class.getResource("AddProduct-view.fxml"));
             Parent root = loader.load();
             ProductController productController = loader.getController();
             productController.passModeToDialog(mode);
@@ -575,8 +604,39 @@ public class DashboardController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private void openBookingDialog(String mode, Booking booking)
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddBooking-view.fxml"));
+        Parent parent = null;
+
+        try
+        {
+            parent = fxmlLoader.load();
+            BookingController bookingController = fxmlLoader.getController();
+            bookingController.passModeToDialog(mode);
+            bookingController.setMainController(this);
+            if(mode.equals("edit"))
+            {
+
+                bookingController.processBooking(booking);
+            }
+
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle(mode.equals("add") ? "Add Booking" : "Edit Booking");
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
 
     }
+
 
     // Helper method to hide all GridPanes.
     private void hideAllGridPanes() {
@@ -605,24 +665,33 @@ public class DashboardController {
            Statement stmt = conn.createStatement();
            ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName);
 
-           while (rs.next()) {
-               if ("Bookings".equals(tableName)) {
+           while (rs.next())
+           {
+               if ("Bookings".equals(tableName))
+               {
                    bookingData.add(new Booking(rs.getInt(1), rs.getDate(2), rs.getString(3),
                            rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getInt(7)));
-               } else if ("Products".equals(tableName)) {
+               }
+               else if ("Products".equals(tableName))
+               {
                    productData.add(new Product(rs.getInt(1), rs.getString(2)));
-               } else if ("Packages".equals(tableName)) {
+               } else if ("Packages".equals(tableName))
+               {
                    packagesData.add(new Packages(rs.getInt(1), rs.getString(2), rs.getDate(3),
                            rs.getDate(4), rs.getString(5), rs.getDouble(6),
                            rs.getDouble(7)
                    ));
-               } else if ("Customers".equals(tableName)) {
+               }
+               else if ("Customers".equals(tableName))
+               {
                    customerData.add(new Customer( rs.getInt(1), rs.getString(2), rs.getString(3),
                            rs.getString(4), rs.getString(5), rs.getString(6),
                            rs.getString(7), rs.getString(8), rs.getString(9),
                            rs.getString(10), rs.getString(11), rs.getInt(12)
                    ));
-               } else if ("Suppliers".equals(tableName)) {
+               }
+               else if ("Suppliers".equals(tableName))
+               {
                    supplierData.add(new Supplier(rs.getInt(1), rs.getString(2)));
                }
 
@@ -646,6 +715,10 @@ public class DashboardController {
         supplierData.clear();
         fetchTableData("Suppliers", supplierData);
     }
+    public void refreshBookingList() {
+        bookingData.clear();
+        fetchTableData("Bookings", bookingData);
+    }
 
     public void clearTableSelections() {
         if (tvSuppliers != null && !tvSuppliers.getSelectionModel().isEmpty()) {
@@ -654,6 +727,9 @@ public class DashboardController {
 
         if (tvProducts != null && !tvProducts.getSelectionModel().isEmpty()) {
             tvProducts.getSelectionModel().clearSelection();
+        }
+        if (tvBookings != null && !tvBookings.getSelectionModel().isEmpty()) {
+            tvBookings.getSelectionModel().clearSelection();
         }
     }
 }
