@@ -53,12 +53,9 @@ public class BookingController {
 
     private DashboardController mainController;
 
-    public void setMainController(DashboardController mainController) {
-
-        this.mainController = mainController;
-    }
-
-
+    ObservableList customers = FXCollections.observableArrayList();
+    ObservableList tripTypes = FXCollections.observableArrayList();
+    ObservableList packages = FXCollections.observableArrayList();
         @FXML
             // This method is called by the FXMLLoader when initialization is complete
         void initialize()
@@ -90,6 +87,7 @@ public class BookingController {
                 }
             });
         }
+
     private void closeDialog()
     {
         if (mainController != null)
@@ -98,9 +96,26 @@ public class BookingController {
         }
         btnCancel.getScene().getWindow().hide();
     }
-    private void populateCustomerIdComboBox() {
-        ObservableList customers = FXCollections.observableArrayList();
 
+    private Properties getProperties() {
+        try {
+            FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
+            Properties properties = new Properties();
+            properties.load(fis);
+            return properties;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void setMainController(DashboardController mainController) {
+
+        this.mainController = mainController;
+    }
+
+    private void populateCustomerIdComboBox()
+    {
         String url = "";
         String user = "";
         String password = "";
@@ -117,10 +132,12 @@ public class BookingController {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("select CustomerId from customers");
 
-            while (rs.next()) {
+            while (rs.next())
+            {
                 String item = rs.getString("CustomerId");
                 customers.add(item);
             }
+
             cbCustomerId.setItems(customers);
             conn.close();
         } catch (IOException | SQLException e) {
@@ -128,7 +145,7 @@ public class BookingController {
         }
     }
         private void populateTripTypeComboBox() {
-            ObservableList tripTypes = FXCollections.observableArrayList();
+
 
             String url = "";
             String user = "";
@@ -146,10 +163,12 @@ public class BookingController {
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery("select TripTypeId from triptypes");
 
-                while (rs.next()) {
+                while (rs.next())
+                {
                     String item = rs.getString("TripTypeId");
                     tripTypes.add(item);
                 }
+
                 cbTripType.setItems(tripTypes);
                 conn.close();
             } catch (IOException | SQLException e) {
@@ -158,7 +177,7 @@ public class BookingController {
         }
 
         private void populatePackageIdComboBox() {
-            ObservableList packages = FXCollections.observableArrayList();
+
 
             String url = "";
             String user = "";
@@ -177,9 +196,10 @@ public class BookingController {
                 ResultSet rs = stmt.executeQuery("select * from packages");
                 ResultSetMetaData rsmd = rs.getMetaData();
 
-                while (rs.next()) {
+                while (rs.next())
+                {
                     String item = rs.getString("PackageId");
-                    packages.add(item);
+                    packages.add(rs);
                 }
                 cbPackageId.setItems(packages);
                 conn.close();
@@ -192,30 +212,17 @@ public class BookingController {
             this.mode = mode;
         }
 
-        public void processBooking(Booking booking) {
-//        tfAgtId.setText(t1.getAgentId() + "");
-//        tfAgtFirstName.setText(t1.getAgtFirstName());
-//        tfAgtMiddleInitial.setText(t1.getAgtMiddleInitial());
-//        tfAgtLastName.setText(t1.getAgtLastName());
-//        tfAgtBusPhone.setText(t1.getAgtBusPhone());
-//        tfAgtEmail.setText(t1.getAgtEmail());
-//        tfAgtPosition.setText(t1.getAgtPosition());
-//        tfAgencyId.setText(t1.getAgencyId() + "");
+        public void processBooking(Booking booking)
+        {
             tfBookingId.setText(booking.getBookingId() + "");
             tfBookingDate.setText(booking.getBookingDate() + "");
             tfBookingNo.setText(booking.getBookingNo());
             tfTravelerCount.setText(booking.getTravelerCount() + "");
+            if(mode.equals("edit"))
+            {
+
+            }
         }
-    private Properties getProperties() {
-        try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
-            Properties properties = new Properties();
-            properties.load(fis);
-            return properties;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private void btnSaveClicked(MouseEvent mouseEvent) {
         Properties p = getProperties();

@@ -618,7 +618,6 @@ public class DashboardController {
             bookingController.setMainController(this);
             if(mode.equals("edit"))
             {
-
                 bookingController.processBooking(booking);
             }
 
