@@ -99,7 +99,7 @@ public class BookingController {
 
     private Properties getProperties() {
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Alisa\\Documents\\connection.properties");
             Properties properties = new Properties();
             properties.load(fis);
             return properties;

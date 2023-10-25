@@ -375,7 +375,6 @@ public class DashboardController {
         assert tvSuppliers != null : "fx:id=\"tvSuppliers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
 
 
-
         pnPackages.setVisible(true);
         pnProducts.setVisible(false);
         pnSuppliers.setVisible(false);
@@ -402,10 +401,6 @@ public class DashboardController {
 
         //testing !!!
         btnAddPackages.setOnAction(event -> openPackageDialog("add", null));
-
-
-
-
 
 
 
@@ -486,6 +481,7 @@ public class DashboardController {
             }
         });
 
+        
         colCustomerCustomerId.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
         colCustFirstName.setCellValueFactory(new PropertyValueFactory<Customer, String>("custFirstName"));
         colCustLastName.setCellValueFactory(new PropertyValueFactory<Customer, String>("custLastName"));
@@ -498,9 +494,30 @@ public class DashboardController {
         colCustBusPhone.setCellValueFactory(new PropertyValueFactory<Customer, String>("custBusPhone"));
         colCustEmail.setCellValueFactory(new PropertyValueFactory<Customer, String>("custEmail"));
         colAgentId.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("agentId"));
-
+        
         tvCustomers.setItems(customerData);
 
+        btnAddCustomers.setOnAction(event-> openCustomerDialog("add", null));
+
+        tvCustomers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Customer>() {
+            @Override
+            public void changed(ObservableValue<? extends Customer> observableValue, Customer customer, Customer t1) {
+                if (tvCustomers.getSelectionModel().isSelected(tvCustomers.getSelectionModel().getSelectedIndex())){
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            openCustomerDialog("edit", t1);
+
+                        }
+                    });
+                }
+            }
+        });
+        //load Customer Data
+        fetchTableData("Customers", customerData);
+
+        
+        
         colPackagePackageId.setCellValueFactory(new PropertyValueFactory<Packages, Integer>("packageId"));
         colPkgName.setCellValueFactory(new PropertyValueFactory<Packages, String>("pkgName"));
         colPkgStartDate.setCellValueFactory(new PropertyValueFactory<Packages, Date>("pkgStartDate"));
@@ -532,8 +549,28 @@ public class DashboardController {
         fetchTableData("Packages", packagesData);
         fetchTableData("Customers", customerData);
         fetchTableData("Suppliers", supplierData);
+    }
 
+    private void openCustomerDialog(String mode, Customer customer) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddCustomer-view.fxml"));
+            Parent root = loader.load();
+            CustomerController customerController = loader.getController();
+            customerController.passModeToDialog(mode);
+            customerController.setMainController(this);
 
+            if (mode.equals("edit")) {
+                customerController.processCustomer(customer);
+            }
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle(mode.equals("add") ? "Add Customer" : "Edit Customer");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void openPackageDialog(String mode, Packages currentPackage) { //!!! greg, working on this - why doesn't it like 'package'?
@@ -652,7 +689,7 @@ public class DashboardController {
        String password = "";
 
        try {
-           FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
+           FileInputStream fis = new FileInputStream("C:\\Users\\Alisa\\Documents\\connection.properties");
            Properties p = new Properties();
            p.load(fis);
            url = (String) p.get("url");
@@ -705,6 +742,7 @@ public class DashboardController {
         packagesData.clear();
         fetchTableData("Packages", packagesData);
     }
+  
     public void refreshProductList() {
         productData.clear();
         fetchTableData("Products", productData);
@@ -730,6 +768,11 @@ public class DashboardController {
         if (tvBookings != null && !tvBookings.getSelectionModel().isEmpty()) {
             tvBookings.getSelectionModel().clearSelection();
         }
+    }
+
+    public void updateCustomerList() {
+        customerData.clear();
+        fetchTableData("Customers", customerData);
     }
 }
 
