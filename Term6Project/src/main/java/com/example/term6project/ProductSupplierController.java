@@ -16,12 +16,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class ProductSupplierController {
 
@@ -54,15 +52,16 @@ public class ProductSupplierController {
 
     @FXML // fx:id="tvProductSupplier"
     private TableView<ProductSupplier> tvProductSupplier; // Value injected by FXMLLoader
-    String mode =  "add";;
+    String mode = "add";
+    ;
 
     private ObservableList<Product> productsList = FXCollections.observableArrayList();
     private ObservableList<Supplier> suppliersList = FXCollections.observableArrayList();
     private ObservableList<ProductSupplier> productSupplierData = FXCollections.observableArrayList();
 
 
-
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert btnCancel != null : "fx:id=\"btnCancel\" was not injected: check your FXML file 'AddProductSupplier-view.fxml'.";
         assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'AddProductSupplier-view.fxml'.";
@@ -74,15 +73,7 @@ public class ProductSupplierController {
         assert tvProductSupplier != null : "fx:id=\"tvProductSupplier\" was not injected: check your FXML file 'AddProductSupplier-view.fxml'.";
 
 
-
-        // Update the PropertyValueFactory for colProductSupplierId
-        colProductSupplierId.setCellValueFactory(new PropertyValueFactory<>("productSupplierId"));
-        // Update the PropertyValueFactory for colProductId and colSupplierId
-        colProductId.setCellValueFactory(new PropertyValueFactory<>("productName"));
-        colSupplierId.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
-
-        tvProductSupplier.setItems(productSupplierData);
-        getProductsSupplier();
+        populateProductsSupplierTextView();
 
         // Populate ComboBoxes with all product and supplier names
         getProducts();
@@ -91,7 +82,6 @@ public class ProductSupplierController {
 
         cmbProducts.setItems(productsList);
         cmbSuppliers.setItems(suppliersList);
-
 
 
         btnSave.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -125,7 +115,7 @@ public class ProductSupplierController {
         String password = "";
 
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
             Properties p = new Properties();
             p.load(fis);
             url = (String) p.get("url");
@@ -158,7 +148,7 @@ public class ProductSupplierController {
         String password = "";
 
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
             Properties p = new Properties();
             p.load(fis);
             url = (String) p.get("url");
@@ -182,7 +172,7 @@ public class ProductSupplierController {
         }
     }
 
-    private void saveProductSupplier( Product selectedProduct, Supplier selectedSupplier) {
+    private void saveProductSupplier(Product selectedProduct, Supplier selectedSupplier) {
         Properties p = getProperties();
         Connection conn = null;
 
@@ -230,7 +220,7 @@ public class ProductSupplierController {
 
     private Properties getProperties() {
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
             Properties properties = new Properties();
             properties.load(fis);
             return properties;
@@ -238,8 +228,6 @@ public class ProductSupplierController {
             throw new RuntimeException(e);
         }
     }
-
-
 
     private void getProductsSupplier() {
         productSupplierData.clear();
@@ -251,7 +239,7 @@ public class ProductSupplierController {
         String password = "";
 
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
             Properties p = new Properties();
             p.load(fis);
             url = (String) p.get("url");
@@ -283,10 +271,80 @@ public class ProductSupplierController {
 
     }
 
-  /*  public void refreshList() {
-        productSupplierData.clear();
-        getProductsSupplier();
-    }*/
+    @FXML
+    private void btnSaveClicked() {
+        if (showConfirmationDialog("Save", "Are you sure you want to save these changes?")) {
+            Product selectedProduct = cmbProducts.getValue();
+            Supplier selectedSupplier = cmbSuppliers.getValue();
+            saveProductSupplier(selectedProduct, selectedSupplier);
+
+            // Refresh the product list in the dashboard
+
+
+            // Update the PropertyValueFactory for colProductSupplierId
+            populateProductsSupplierTextView();
+            successNotification();
+        }
+    }
+
+    @FXML
+    private void btnCancelClicked() {    //close add/edit window
+        Stage stage = (Stage) btnCancel.getScene().getWindow();
+        stage.close();
+
+        //!!! add confirmation dialog
+    }
+
+    private boolean showConfirmationDialog(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+
+        ButtonType okButton = new ButtonType("OK");
+        ButtonType cancelButton = new ButtonType("Cancel");
+
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == okButton) {
+                //!!!!
+            }
+        });
+        return (alert.getResult() == okButton);
+    }
+
+  public void populateProductsSupplierTextView(){
+    // Update the PropertyValueFactory for colProductSupplierId
+        colProductSupplierId.setCellValueFactory(new PropertyValueFactory<>("productSupplierId"));
+    // Update the PropertyValueFactory for colProductId and colSupplierId
+        colProductId.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        colSupplierId.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
+
+        tvProductSupplier.setItems(productSupplierData);
+
+    getProductsSupplier();
+
+    }
+
+    private void successNotification(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Changes saved.");
+        alert.setHeaderText("Changes saved successfully.");
+        //button label
+        ButtonType okButton = new ButtonType("OK");
+        alert.getButtonTypes().setAll(okButton);
+
+        //user response
+        alert.showAndWait().ifPresent(response ->{
+            if (response == okButton){
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.close();
+            }
+        });
+    }
 
 }
 
