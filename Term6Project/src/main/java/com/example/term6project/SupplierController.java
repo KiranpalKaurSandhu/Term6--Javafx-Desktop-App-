@@ -77,7 +77,7 @@ public class SupplierController {
 
     private Properties getProperties() {
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\kiran\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
             Properties properties = new Properties();
             properties.load(fis);
             return properties;

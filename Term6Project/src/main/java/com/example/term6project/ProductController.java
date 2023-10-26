@@ -54,7 +54,8 @@ public class ProductController {
 
 
     // Set the main controller
-    public void setMainController(DashboardController mainController) {
+    public void setMainController(DashboardController mainController)
+    {
 
         this.mainController = mainController;
     }
@@ -85,7 +86,7 @@ public class ProductController {
     }
     private Properties getProperties() {
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\kiran\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
             Properties properties = new Properties();
             properties.load(fis);
             return properties;
