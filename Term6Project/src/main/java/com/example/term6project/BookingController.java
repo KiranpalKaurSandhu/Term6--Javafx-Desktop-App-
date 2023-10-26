@@ -152,7 +152,7 @@ public class BookingController {
             String password = "";
 
             try {
-                FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+                FileInputStream fis = new FileInputStream("C:\\Users\\Alisa\\Documents\\connection.properties");
                 Properties p = new Properties();
                 p.load(fis);
                 url = (String) p.get("url");

@@ -191,6 +191,7 @@ public class CustomerController {
                 System.out.println("Customer deleted");
             }
             conn.close();
+            mainController.updateCustomerList();
             Node node = (Node) mouseEvent.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -206,7 +207,7 @@ public class CustomerController {
 
     private Properties getProperties() {
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Alisa\\Documents\\connection.properties");
             Properties properties = new Properties();
             properties.load(fis);
             return properties;
@@ -252,7 +253,7 @@ public class CustomerController {
             stmt.setString(9, tfCustBusPhone.getText());
             stmt.setString(10, tfCustEmail.getText());
             stmt.setInt(11,Integer.parseInt (cbAgentid.getValue().toString()));
-           // stmt.setInt(11, cbAgentid.getValue());
+
 
             if (mode .equals("edit"))
             {

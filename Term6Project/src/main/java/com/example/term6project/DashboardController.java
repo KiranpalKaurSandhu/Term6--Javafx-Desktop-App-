@@ -68,9 +68,6 @@ public class DashboardController {
     @FXML // fx:id="btnCustomers"
     private Button btnCustomers; // Value injected by FXMLLoader
 
-    @FXML // fx:id="btnEditCustomers"
-    private Button btnEditCustomers; // Value injected by FXMLLoader
-
     @FXML // fx:id="btnEditPackages"
     private Button btnEditPackages; // Value injected by FXMLLoader
 
@@ -357,7 +354,6 @@ public class DashboardController {
         assert btnAddSuppliers != null : "fx:id=\"btnAddSuppliers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnBookings != null : "fx:id=\"btnBookings\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnCustomers != null : "fx:id=\"btnCustomers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
-        assert btnEditCustomers != null : "fx:id=\"btnEditCustomers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnEditPackages != null : "fx:id=\"btnEditPackages\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnPackages != null : "fx:id=\"btnPackages\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert btnProducts != null : "fx:id=\"btnProducts\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
@@ -689,7 +685,7 @@ public class DashboardController {
        String password = "";
 
        try {
-           FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+           FileInputStream fis = new FileInputStream("C:\\Users\\Alisa\\Documents\\connection.properties");
            Properties p = new Properties();
            p.load(fis);
            url = (String) p.get("url");
