@@ -12,7 +12,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.text.SimpleDateFormat;//imported for start and end
+import java.text.SimpleDateFormat;//imported for start and end dates
+import java.text.ParseException;
+import java.util.Date;
 
 import static java.lang.Integer.parseInt;
 
@@ -147,6 +149,7 @@ public class TravelPackageController {
             if (isValidString(packageName, "package Name")&&
             isValidDate(startDate) &&
             isValidDate(endDate)&&
+                    isLaterThan(endDate, startDate) &&
                     isValidString(description, "description")&&
                     isValidDouble("Base Price", basePrice)&&
                     isValidDouble("Agency Commission", agencyCommission)
@@ -199,6 +202,8 @@ public class TravelPackageController {
 
                     if (rowsAffected > 0) {
                         System.out.println("Package data saved successfully.");
+                        //close add/edit window
+                        closeDialog();
                     } else {
                         // No rows were affected, something is amiss
                         System.out.println("Package data failed to save.");
@@ -215,15 +220,19 @@ public class TravelPackageController {
                 // confirmation dialog
                 successNotification();
 
-                //close add/edit window
-                Stage stage = (Stage) btnSave.getScene().getWindow();
-                stage.close();
             }
         }
         else {
             // !!!notify user that save has been cancelled?
         }
     }
+    private void closeDialog() {
+        if (mainController != null) {
+            mainController.clearTableSelections();
+        }
+        btnCancel.getScene().getWindow().hide();
+    }
+
 
     private void successNotification(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -314,6 +323,29 @@ public class TravelPackageController {
         }
     }
 
+    private boolean isLaterThan(String endDate, String startDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            Date dateEndDate = sdf.parse(endDate);
+            Date dateStartDate = sdf.parse(startDate);
+
+            if (dateEndDate.compareTo(dateStartDate) > 0) {
+                return true;
+            } else if (dateEndDate.compareTo(dateStartDate) < 0) {
+                failureNotification("Package failed to save. End date must be later than start date (maybe you've swapped their places?).");
+                return false;
+            } else {
+                failureNotification("Package failed to save. End date must be later than start date (they are currently set to the same date).");
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        failureNotification("Date input is of the wrong type. Please re-enter in YYYY-MM-dd format.");
+        return false;
+    }
+
 
     //double filter for price and agency commission
     private boolean isValidDouble(String type, String stringDouble){
@@ -336,7 +368,7 @@ public class TravelPackageController {
    private Properties getProperties() {
         FileInputStream fis = null;
         try {
-            fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");  //!!! edit for users machine
+            fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");  //!!! edit for users machine
             Properties properties = new Properties();
             properties.load(fis);
             return properties;

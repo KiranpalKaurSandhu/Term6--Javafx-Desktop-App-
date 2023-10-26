@@ -126,7 +126,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="btnEditPackages" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: grey;" text="Edit" textFill="WHITE">
+<!--                              <Button fx:id="btnEditPackages" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: grey;" text="Edit" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                                  </HBox.margin>
@@ -136,7 +136,7 @@
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
-                              </Button>
+                              </Button>-->
                            </children>
                         </HBox>
                      </children>
