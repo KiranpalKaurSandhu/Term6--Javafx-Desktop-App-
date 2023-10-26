@@ -364,7 +364,8 @@ public class TravelPackageController {
    private Properties getProperties() {
         FileInputStream fis = null;
         try {
-            fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");  //!!! edit for users machine
+            fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");  //!!! edit for users machine
+
             Properties properties = new Properties();
             properties.load(fis);
             return properties;
