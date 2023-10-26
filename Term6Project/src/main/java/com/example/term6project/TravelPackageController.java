@@ -286,11 +286,7 @@ public class TravelPackageController {
             if (response == okButton){
                 //!!!!
             }
-            else{
-                //!!! cancel button stuff
-            }
         });
-
         return (alert.getResult() == okButton);
     }
 
