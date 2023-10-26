@@ -112,43 +112,43 @@
                         <Font size="15.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="tfCustFirstName">
+                <TextField fx:id="tfCustFirstName" promptText="Click to enter data">
                     <font>
                         <Font size="15.0" />
                     </font></TextField>
-                <TextField fx:id="tfCustLastName">
+                <TextField fx:id="tfCustLastName" promptText="Click to enter data">
                     <font>
                         <Font size="15.0" />
                     </font></TextField>
-                <TextField fx:id="tfCustAddress">
+                <TextField fx:id="tfCustAddress" promptText="Click to enter data">
                     <font>
                         <Font size="15.0" />
                     </font></TextField>
-                <TextField fx:id="tfCustCity">
+                <TextField fx:id="tfCustCity" promptText="Click to enter data">
                     <font>
                         <Font size="15.0" />
                     </font></TextField>
-                <TextField fx:id="tfCustProv">
+                <TextField fx:id="tfCustProv" promptText="Click to enter data">
                     <font>
                         <Font size="15.0" />
                     </font></TextField>
-                <TextField fx:id="tfCustPostal">
+                <TextField fx:id="tfCustPostal" promptText="Click to enter data">
                     <font>
                         <Font size="15.0" />
                     </font></TextField>
-                <TextField fx:id="tfCustCountry">
+                <TextField fx:id="tfCustCountry" promptText="Click to enter data">
                     <font>
                         <Font size="15.0" />
                     </font></TextField>
-                <TextField fx:id="tfCustHomePhone">
+                <TextField fx:id="tfCustHomePhone" promptText="Click to enter data">
                     <font>
                         <Font size="15.0" />
                     </font></TextField>
-                <TextField fx:id="tfCustBusPhone">
+                <TextField fx:id="tfCustBusPhone" promptText="Click to enter data">
                     <font>
                         <Font size="15.0" />
                     </font></TextField>
-                <TextField fx:id="tfCustEmail">
+                <TextField fx:id="tfCustEmail" promptText="Click to enter data">
                     <font>
                         <Font size="15.0" />
                     </font></TextField>

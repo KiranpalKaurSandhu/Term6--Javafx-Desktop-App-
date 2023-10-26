@@ -44,13 +44,13 @@
    <TextField fx:id="txtDescription" layoutX="334.0" layoutY="168.0" />
    <TextField fx:id="txtBasePrice" layoutX="334.0" layoutY="195.0" />
    <TextField fx:id="txtAgencyCommission" layoutX="334.0" layoutY="222.0" />
-   <Button fx:id="btnSave" onAction="#btnSaveClicked" layoutX="221.0" layoutY="288.0" mnemonicParsing="false" text="Save" />
-   <Button fx:id="btnCancel" onAction="#btnCancelClicked" layoutX="328.0" layoutY="288.0" mnemonicParsing="false" text="Cancel" />
+   <Button fx:id="btnSave" layoutX="221.0" layoutY="288.0" mnemonicParsing="false" onAction="#btnSaveClicked" text="Save" />
+   <Button fx:id="btnCancel" layoutX="328.0" layoutY="288.0" mnemonicParsing="false" onAction="#btnCancelClicked" text="Cancel" />
    <Label layoutX="173.0" layoutY="59.0" text="Package ID">
       <font>
          <Font size="18.0" />
       </font>
    </Label>
-   <TextField fx:id="txtPackageId" layoutX="334.0" layoutY="60.0" />
+   <TextField fx:id="txtPackageId" editable="false" layoutX="334.0" layoutY="60.0" />
 
 </AnchorPane>
