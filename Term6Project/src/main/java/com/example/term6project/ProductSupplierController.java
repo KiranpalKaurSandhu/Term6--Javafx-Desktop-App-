@@ -230,7 +230,7 @@ public class ProductSupplierController {
 
     private Properties getProperties() {
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
             Properties properties = new Properties();
             properties.load(fis);
             return properties;
@@ -251,7 +251,7 @@ public class ProductSupplierController {
         String password = "";
 
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
             Properties p = new Properties();
             p.load(fis);
             url = (String) p.get("url");
