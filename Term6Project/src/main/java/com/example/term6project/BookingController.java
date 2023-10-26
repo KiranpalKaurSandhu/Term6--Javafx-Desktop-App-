@@ -29,10 +29,10 @@ public class BookingController {
         private Button btnSave; // Value injected by FXMLLoader
 
         @FXML // fx:id="cbPackageId"
-        private ComboBox<Packages> cbPackageId; // Value injected by FXMLLoader
+        private ComboBox<Integer> cbPackageId; // Value injected by FXMLLoader
 
         @FXML // fx:id="cbTripType"
-        private ComboBox<TripType> cbTripType; // Value injected by FXMLLoader
+        private ComboBox<String> cbTripType; // Value injected by FXMLLoader
 
         @FXML // fx:id="tfBookingDate"
         private TextField tfBookingDate; // Value injected by FXMLLoader
@@ -44,7 +44,7 @@ public class BookingController {
         private TextField tfBookingNo; // Value injected by FXMLLoader
 
         @FXML // fx:id="cbCustomerId"
-        private ComboBox<Customer> cbCustomerId; // Value injected by FXMLLoader
+        private ComboBox<Integer> cbCustomerId; // Value injected by FXMLLoader
 
         @FXML // fx:id="tfTravelerCount"
         private TextField tfTravelerCount; // Value injected by FXMLLoader
@@ -99,7 +99,7 @@ public class BookingController {
 
     private Properties getProperties() {
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
             Properties properties = new Properties();
             properties.load(fis);
             return properties;
@@ -121,7 +121,7 @@ public class BookingController {
         String password = "";
 
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
             Properties p = new Properties();
             p.load(fis);
             url = (String) p.get("url");
@@ -152,7 +152,7 @@ public class BookingController {
             String password = "";
 
             try {
-                FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+                FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
                 Properties p = new Properties();
                 p.load(fis);
                 url = (String) p.get("url");
@@ -184,7 +184,7 @@ public class BookingController {
             String password = "";
 
             try {
-                FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+                FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
                 Properties p = new Properties();
                 p.load(fis);
                 url = (String) p.get("url");
@@ -199,7 +199,7 @@ public class BookingController {
                 while (rs.next())
                 {
                     String item = rs.getString("PackageId");
-                    packages.add(rs);
+                    packages.add(item);
                 }
                 cbPackageId.setItems(packages);
                 conn.close();
@@ -218,12 +218,11 @@ public class BookingController {
             tfBookingDate.setText(booking.getBookingDate() + "");
             tfBookingNo.setText(booking.getBookingNo());
             tfTravelerCount.setText(booking.getTravelerCount() + "");
-            if(mode.equals("edit"))
-            {
+            cbCustomerId.setValue(booking.getCustomerId());
+            cbTripType.setValue(booking.getTripTypeId());
+            cbPackageId.setValue(booking.getPackageId());
 
-            }
         }
-
     private void btnSaveClicked(MouseEvent mouseEvent) {
         Properties p = getProperties();
         Connection conn = null;

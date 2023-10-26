@@ -86,7 +86,7 @@ public class ProductController {
     }
     private Properties getProperties() {
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Jade-Laptop\\Documents\\connection.properties");
             Properties properties = new Properties();
             properties.load(fis);
             return properties;
