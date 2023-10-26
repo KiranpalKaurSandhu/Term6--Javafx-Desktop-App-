@@ -1,6 +1,3 @@
-/**
- * Sample Skeleton for 'AddPackage-view.fxml' Controller Class
- */
 
 package com.example.term6project;
 
@@ -8,25 +5,25 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.text.SimpleDateFormat;//imported for start and end dates
+import java.text.SimpleDateFormat;//imported for start and end
 
 import static java.lang.Integer.parseInt;
 
 public class TravelPackageController {
-    private String mode;    //!!!
-    private DashboardController mainController; //!!!
-    public void setMainController(DashboardController mainController) { //!!!
+    private String mode;
+    private DashboardController mainController;
+    public void setMainController(DashboardController mainController) {
 
         this.mainController = mainController;
     }
-    public void passModeToDialog(String mode) { //!!!
+    public void passModeToDialog(String mode) {
         this.mode = mode;
     }
 
@@ -98,8 +95,6 @@ public class TravelPackageController {
 
         //convert package ID to string
         String strPackageId = Integer.toString(currentPackage.getPackageId());
-        //String testString = "test";
-
 
         //convert price and commission to string
         String strPrice = Double.toString(currentPackage.getPkgBasePrice());
@@ -111,7 +106,7 @@ public class TravelPackageController {
         String strEndDate= formatter.format(currentPackage.getPkgEndDate());
 
 
-        txtPackageId.setText(strPackageId);  //!!! why isn't this working
+        txtPackageId.setText(strPackageId);  //!!! why isn't this working?
         txtPackageName.setText(currentPackage.getPkgName());
         txtStartDate.setText(strStartDate);
         txtEndDate.setText(strEndDate);
@@ -122,12 +117,13 @@ public class TravelPackageController {
 
     /*public void clearFormFields() {
         // clear all text fields
-    }*/ //!!! will decided later whether this method is needed
+    }*/ //!!! will decide later whether this method is needed
 
     @FXML
     private void btnCancelClicked(){    //close add/edit window
         Stage stage = (Stage) btnCancel.getScene().getWindow();
         stage.close();
+
         //!!! add confirmation dialog
     }
 
@@ -143,72 +139,198 @@ public class TravelPackageController {
         String startDate = txtStartDate.getText();
         String endDate = txtEndDate.getText();
         String description = txtDescription.getText();
-        double basePrice = Double.parseDouble(txtBasePrice.getText());
-        double agencyCommission = Double.parseDouble(txtAgencyCommission.getText());
+        String basePrice = txtBasePrice.getText();
+        String agencyCommission = txtAgencyCommission.getText();
 
-        Properties p = getProperties();
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection((String) p.get("url"), p);   // establish connection to db
-
-            String sql = "";    // write entry to database
-            if (mode.equals("edit"))
+        //confirm whether user wishes to save
+        if (showConfirmationDialog("Save", "Are you sure you want to save these changes?")) {
+            if (isValidString(packageName, "package Name")&&
+            isValidDate(startDate) &&
+            isValidDate(endDate)&&
+                    isValidString(description, "description")&&
+                    isValidDouble("Base Price", basePrice)&&
+                    isValidDouble("Agency Commission", agencyCommission)
+            )
             {
-                sql = "UPDATE `packages` SET `PkgName`=?," +
-                        "`PkgStartDate`=?,`PkgEndDate`=?," +
-                        "`PkgDesc`=?,`PkgBasePrice`=?," +
-                        "`PkgAgencyCommission`=? WHERE PackageId=?";
-             }
-            else {
-                sql = "INSERT INTO `packages`(`PkgName`," +
-                        " `PkgStartDate`, `PkgEndDate`, `PkgDesc`," +
-                        " `PkgBasePrice`, `PkgAgencyCommission`)" +
-                        " VALUES (?,?,?,?,?,?)";
-            }
+                //convert base price and agency commission to doubles
+                Double basePriceDouble = Double.parseDouble(basePrice);
+                Double agencyCommissionDouble = Double.parseDouble(agencyCommission);
 
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            // Set parameters based on the SQL statement
-            stmt.setString(1, packageName);
-            stmt.setString(2, startDate);
-            stmt.setString(3, endDate);
-            stmt.setString(4, description);
-            stmt.setDouble(5, basePrice);
-            stmt.setDouble(6, agencyCommission);
-
-            // get and set package id from selection
-            if (mode.equals("edit")) {
+                Properties p = getProperties();
+                Connection conn = null;
                 try {
-                    int packageId = parseInt(txtPackageId.getText());
-                    stmt.setInt(7, parseInt(txtPackageId.getText()));  // !!! is this the right parameter index
-                } catch (NumberFormatException e) {
-                    System.out.println("Package ID: " + txtPackageId.getText());// !!! testing
-                    System.err.println("Invalid package ID input.");
-                    return;
+                    conn = DriverManager.getConnection((String) p.get("url"), p);   // establish connection to db
+
+                    String sql = "";    // write entry to database
+                    if (mode.equals("edit")) {
+                        sql = "UPDATE `packages` SET `PkgName`=?," +
+                                "`PkgStartDate`=?,`PkgEndDate`=?," +
+                                "`PkgDesc`=?,`PkgBasePrice`=?," +
+                                "`PkgAgencyCommission`=? WHERE PackageId=?";
+                    } else {
+                        sql = "INSERT INTO `packages`(`PkgName`," +
+                                " `PkgStartDate`, `PkgEndDate`, `PkgDesc`," +
+                                " `PkgBasePrice`, `PkgAgencyCommission`)" +
+                                " VALUES (?,?,?,?,?,?)";
+                    }
+
+                    PreparedStatement stmt = conn.prepareStatement(sql);
+                    // Set parameters based on the SQL statement
+                    stmt.setString(1, packageName);
+                    stmt.setString(2, startDate);
+                    stmt.setString(3, endDate);
+                    stmt.setString(4, description);
+                    stmt.setDouble(5, basePriceDouble);
+                    stmt.setDouble(6, agencyCommissionDouble);
+
+                    // get and set package id from selection
+                    if (mode.equals("edit")) {
+                        try {
+                            int packageId = parseInt(txtPackageId.getText());
+                            stmt.setInt(7, parseInt(txtPackageId.getText()));  // !!! is this the right parameter index
+                        } catch (NumberFormatException e) {
+                            System.out.println("Package ID: " + txtPackageId.getText());// !!! testing
+                            System.err.println("Invalid package ID input.");
+                            return;
+                        }
+                    }
+
+                    int rowsAffected = stmt.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        System.out.println("Package data saved successfully.");
+                    } else {
+                        // No rows were affected, something is amiss
+                        System.out.println("Package data failed to save.");
+                    }
+
+                    conn.close(); //close db connection
+
+                    // Refresh the product list in the dashboard
+                    mainController.refreshPackageList();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
+
+                // confirmation dialog
+                successNotification();
+
+                //close add/edit window
+                Stage stage = (Stage) btnSave.getScene().getWindow();
+                stage.close();
             }
-
-            int rowsAffected = stmt.executeUpdate();
-
-            if (rowsAffected > 0) {
-                System.out.println("Package data saved successfully.");
-            } else {
-                // No rows were affected, something is amiss
-                System.out.println("Package data failed to save.");
-            }
-
-            conn.close(); //close db connection
-
-            // Refresh the product list in the dashboard
-            mainController.refreshPackageList();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
+        else {
+            // !!!notify user that save has been cancelled?
+        }
+    }
 
-        // !!! confirmation dialog
+    private void successNotification(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Package saved.");
+            alert.setHeaderText("Package saved successfully.");
+            //button label
+        ButtonType okButton = new ButtonType("OK");
+        alert.getButtonTypes().setAll(okButton);
 
-        //close add/edit window
-        Stage stage = (Stage) btnSave.getScene().getWindow();
-        stage.close();
+        //user response
+        alert.showAndWait().ifPresent(response ->{
+            if (response == okButton){
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.close();
+            }
+        });
+    }
+
+    private void failureNotification(String content){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Package failed to save.");
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        //button label
+        ButtonType okButton = new ButtonType("OK");
+        alert.getButtonTypes().setAll(okButton);
+
+        //user response
+        alert.showAndWait().ifPresent(response ->{
+            if (response == okButton){
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.close();
+            }
+        });
+    }
+
+    private boolean showConfirmationDialog(String title, String content){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+
+        ButtonType okButton = new ButtonType("OK");
+        ButtonType cancelButton = new ButtonType("Cancel");
+
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == okButton){
+                //!!!!
+            }
+            else{
+                //!!! cancel button stuff
+            }
+        });
+
+        return (alert.getResult() == okButton);
+    }
+
+    //string filter for package names and descriptions
+    private boolean isValidString(String string, String field){
+        // add message, prevent from being added to db
+        if (string == null){
+            failureNotification("Package failed to save. "+ field + " field must not be empty.");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    //date filter for start and end dates
+    private boolean isValidDate(String date){
+        String datePattern = "\\d{4}-\\d{2}-\\d{2}";
+
+        if (date == null){
+            failureNotification("Package failed to save. Date  field must not be empty.");
+            return false;
+        }
+        else if(!date.matches(datePattern)){
+            failureNotification("Package failed to save. Date must be in YYYY-MM-dd format.");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+
+    //double filter for price and agency commission
+    private boolean isValidDouble(String type, String stringDouble){
+        if (stringDouble == null){
+            failureNotification("Package failed to save. "+type+" field must not be empty.");
+            return false;
+        }
+        else {
+            String regex = "^\\d+(\\.\\d{1,2})?$";
+            if( stringDouble.matches(regex)){
+                return true;
+            }
+            else{
+                failureNotification("Package failed to save. "+type+ " field must be in currency format, e.g., '365.20'.");
+                return false;
+            }
+        }
     }
 
    private Properties getProperties() {
@@ -222,5 +344,4 @@ public class TravelPackageController {
             throw new RuntimeException(e);
         }
     }
-
 }

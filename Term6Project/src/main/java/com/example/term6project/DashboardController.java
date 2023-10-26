@@ -533,7 +533,6 @@ public class DashboardController {
                 }
             }
         });
-        //!!!
 
         // Call fetchTableData to populate data for each table
         fetchTableData("Bookings", bookingData);
