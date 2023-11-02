@@ -18,7 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
  /*
     Author : Kiranpal Kaur
-    Description :
+    Description : This is a JavaFX controller class for handling interactions and data input related to suppliers.
  */
 public class SupplierController {
 
