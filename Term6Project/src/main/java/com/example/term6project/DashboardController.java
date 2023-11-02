@@ -34,7 +34,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+ /*
+ Author : Kiranpal Kaur (Main layout and fetching table data from database for all tables)
+*/
 public class DashboardController {
     /**
      * Sample Skeleton for 'Dashboard-view.fxml' Controller Class
@@ -374,7 +376,9 @@ public class DashboardController {
         assert tvProducts != null : "fx:id=\"tvProducts\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert tvSuppliers != null : "fx:id=\"tvSuppliers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
 
-
+        /*
+        Author : Kiranpal Kaur
+        */
         pnPackages.setVisible(true);
         pnProducts.setVisible(false);
         pnSuppliers.setVisible(false);
@@ -403,7 +407,9 @@ public class DashboardController {
         btnAddPackages.setOnAction(event -> openPackageDialog("add", null));
 
 
-
+        /*
+        Author : Kiranpal Kaur
+        */
         tvProducts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
             @Override
             public void changed(ObservableValue<? extends Product> observableValue, Product product, Product selectedProduct) {
@@ -688,7 +694,7 @@ public class DashboardController {
        String password = "";
 
        try {
-           FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
+           FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
            Properties p = new Properties();
            p.load(fis);
            url = (String) p.get("url");
