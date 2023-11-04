@@ -20,7 +20,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
+/*
+Author : Kiranpal Kaur
+Description : This is the controller class for managing the relationship between products and suppliers
+ in a JavaFX application. It allows users to associate products with suppliers and displays the existing
+  relationships.
+*/
 public class ProductSupplierController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -106,6 +111,7 @@ public class ProductSupplierController {
 
     }
 
+    // Load the list of available products from the database.
     private void getProducts() {
         cmbProducts.getItems().clear();
         productsList.clear();
@@ -115,7 +121,7 @@ public class ProductSupplierController {
         String password = "";
 
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
             Properties p = new Properties();
             p.load(fis);
             url = (String) p.get("url");
@@ -139,6 +145,7 @@ public class ProductSupplierController {
         }
     }
 
+    // Load the list of available suppliers from the database.
     private void getSuppliers() {
         cmbSuppliers.getItems().clear();
         suppliersList.clear();
@@ -148,7 +155,7 @@ public class ProductSupplierController {
         String password = "";
 
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
             Properties p = new Properties();
             p.load(fis);
             url = (String) p.get("url");
@@ -172,6 +179,7 @@ public class ProductSupplierController {
         }
     }
 
+    // Save the product-supplier relationship to the database
     private void saveProductSupplier(Product selectedProduct, Supplier selectedSupplier) {
         Properties p = getProperties();
         Connection conn = null;
@@ -218,9 +226,10 @@ public class ProductSupplierController {
     }
 
 
+    // Retrieve database connection properties from a file
     private Properties getProperties() {
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
             Properties properties = new Properties();
             properties.load(fis);
             return properties;
@@ -229,6 +238,7 @@ public class ProductSupplierController {
         }
     }
 
+    // Load and display the list of product-supplier relationships from the database.
     private void getProductsSupplier() {
         productSupplierData.clear();
         cmbProducts.getItems().clear();
@@ -239,7 +249,7 @@ public class ProductSupplierController {
         String password = "";
 
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
             Properties p = new Properties();
             p.load(fis);
             url = (String) p.get("url");
@@ -271,6 +281,7 @@ public class ProductSupplierController {
 
     }
 
+    // Handle the Save button click event.
     @FXML
     private void btnSaveClicked() {
         if (showConfirmationDialog("Save", "Are you sure you want to save these changes?")) {
@@ -287,6 +298,7 @@ public class ProductSupplierController {
         }
     }
 
+    // Handle the Cancel button click event
     @FXML
     private void btnCancelClicked() {    //close add/edit window
         Stage stage = (Stage) btnCancel.getScene().getWindow();
@@ -295,6 +307,7 @@ public class ProductSupplierController {
         //!!! add confirmation dialog
     }
 
+    // Show a confirmation dialog with the given title and content.
     private boolean showConfirmationDialog(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
@@ -329,6 +342,7 @@ public class ProductSupplierController {
 
     }
 
+    // Show a success notification to the user
     private void successNotification(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Changes saved.");

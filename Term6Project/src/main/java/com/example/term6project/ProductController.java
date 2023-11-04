@@ -21,7 +21,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
+/*
+    Author : Kiranpal Kaur
+    Description : This is the controller class for the "Add Product" dialog in a JavaFX application.
+    It allows users to add or edit product information.
+ */
 
 public class ProductController {
 
@@ -84,6 +88,7 @@ public class ProductController {
         }
     });
     }
+    // Load database connection properties from a properties file
     private Properties getProperties() {
         try {
             FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
@@ -95,6 +100,8 @@ public class ProductController {
         }
     }
 
+
+    // Handle the save button click event
     private void btnSaveClicked(MouseEvent mouseEvent) {
         Properties p = getProperties();
         Connection conn = null;
@@ -135,11 +142,14 @@ public class ProductController {
         }
     }
 
+
+    // Load product data for editing
     public void loadData(Product t1) {
         tfProductId.setText(t1.getProductId() + "");
         tfProductName.setText(t1.getProdName());
     }
 
+    // Close the dialog window
     private void closeDialog() {
         if (mainController != null) {
             mainController.clearTableSelections();

@@ -16,7 +16,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-
+ /*
+    Author : Kiranpal Kaur
+    Description : This is a JavaFX controller class for handling interactions and data input related to suppliers.
+ */
 public class SupplierController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -49,6 +52,7 @@ public class SupplierController {
 
         this.mainController = mainController;
     }
+     // Set the mode (add or edit) for the dialog.
     public void passModeToDialog(String mode) {
         this.mode = mode;
     }
@@ -75,6 +79,7 @@ public class SupplierController {
         });
     }
 
+     // Retrieve database connection properties from a file
     private Properties getProperties() {
         try {
             FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
@@ -86,6 +91,7 @@ public class SupplierController {
         }
     }
 
+     // Handle the Save button click event.
     private void btnSaveClicked(MouseEvent mouseEvent) {
         Properties p = getProperties();
         Connection conn = null;
@@ -147,11 +153,13 @@ public class SupplierController {
         }
     }
 
+     // Load data from a Supplier object and display it in the dialog.
     public void loadData(Supplier t1) {
         tfSupplierId.setText(t1.getSupplierId() + "");
         tfSupplierName.setText(t1.getSupName());
     }
 
+     // Close the dialog window and clear table selections.
     private void closeDialog() {
         if (mainController != null) {
             mainController.clearTableSelections();

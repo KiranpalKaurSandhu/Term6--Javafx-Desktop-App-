@@ -34,7 +34,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+ /*
+ Author : Kiranpal Kaur (Main layout and fetching table data from database for all tables)
+*/
 public class DashboardController {
     /**
      * Sample Skeleton for 'Dashboard-view.fxml' Controller Class
@@ -374,7 +376,9 @@ public class DashboardController {
         assert tvProducts != null : "fx:id=\"tvProducts\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
         assert tvSuppliers != null : "fx:id=\"tvSuppliers\" was not injected: check your FXML file 'Dashboard-view.fxml'.";
 
-
+        /*
+        Author : Kiranpal Kaur
+        */
         pnPackages.setVisible(true);
         pnProducts.setVisible(false);
         pnSuppliers.setVisible(false);
@@ -403,7 +407,9 @@ public class DashboardController {
         btnAddPackages.setOnAction(event -> openPackageDialog("add", null));
 
 
-
+        /*
+        Author : Kiranpal Kaur
+        */
         tvProducts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
             @Override
             public void changed(ObservableValue<? extends Product> observableValue, Product product, Product selectedProduct) {
@@ -429,6 +435,9 @@ public class DashboardController {
         btnAddSuppliers.setOnAction(event -> openSupplierDialog("add", null));
 
 
+        /*
+        Author : Kiranpal Kaur
+        */
         tvSuppliers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Supplier>() {
             @Override
             public void changed(ObservableValue<? extends Supplier> observableValue, Supplier supplier, Supplier selectedSupplier) {
@@ -597,7 +606,9 @@ public class DashboardController {
             throw new RuntimeException(e);
         }
     }
-
+    /*
+        Author : Kiranpal Kaur
+     */
     private void openProductDialog(String mode, Product product) {
         try {
             FXMLLoader loader = new FXMLLoader(TravelExpertsApplication.class.getResource("AddProduct-view.fxml"));
@@ -620,6 +631,10 @@ public class DashboardController {
         }
 
     }
+
+     /*
+         Author : Kiranpal Kaur
+      */
     private void openSupplierDialog(String mode, Supplier supplier) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AddSupplier-view.fxml"));
@@ -641,6 +656,7 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
     private void openBookingDialog(String mode, Booking booking)
     {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddBooking-view.fxml"));
@@ -672,7 +688,9 @@ public class DashboardController {
 
     }
 
-
+    /*
+        Author : Kiranpal Kaur
+     */
     // Helper method to hide all GridPanes.
     private void hideAllGridPanes() {
         pnPackages.setVisible(false);
@@ -682,13 +700,16 @@ public class DashboardController {
         pnCustomers.setVisible(false);
     }
 
+     /*
+         Author : Kiranpal Kaur
+      */
    private void fetchTableData(String tableName, ObservableList<?> data) {
        String url = "";
        String user = "";
        String password = "";
 
        try {
-           FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
+           FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
            Properties p = new Properties();
            p.load(fis);
            url = (String) p.get("url");
@@ -741,12 +762,18 @@ public class DashboardController {
         packagesData.clear();
         fetchTableData("Packages", packagesData);
     }
-  
+
+     /*
+         Author : Kiranpal Kaur
+      */
     public void refreshProductList() {
         productData.clear();
         fetchTableData("Products", productData);
     }
 
+     /*
+         Author : Kiranpal Kaur
+      */
     public void refreshSupplierList() {
         supplierData.clear();
         fetchTableData("Suppliers", supplierData);
@@ -756,6 +783,9 @@ public class DashboardController {
         fetchTableData("Bookings", bookingData);
     }
 
+     /*
+         Author : Kiranpal Kaur
+      */
     public void clearTableSelections() {
         if (tvSuppliers != null && !tvSuppliers.getSelectionModel().isEmpty()) {
             tvSuppliers.getSelectionModel().clearSelection();

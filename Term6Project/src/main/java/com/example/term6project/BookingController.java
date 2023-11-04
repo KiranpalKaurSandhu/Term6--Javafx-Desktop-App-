@@ -193,13 +193,13 @@ public class BookingController {
 
                 Connection conn = DriverManager.getConnection(url, user, password);
                 Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery("select * from packages");
+                ResultSet rs = stmt.executeQuery("select PackageId from packages");
                 ResultSetMetaData rsmd = rs.getMetaData();
 
                 while (rs.next())
                 {
                     String item = rs.getString("PackageId");
-                    packages.add(rs);
+                    packages.add(item);
                 }
                 cbPackageId.setItems(packages);
                 conn.close();
