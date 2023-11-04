@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -108,7 +107,7 @@ public class TravelPackageController {
         String strEndDate= formatter.format(currentPackage.getPkgEndDate());
 
 
-        txtPackageId.setText(strPackageId);  //!!! why isn't this working?
+        txtPackageId.setText(strPackageId);
         txtPackageName.setText(currentPackage.getPkgName());
         txtStartDate.setText(strStartDate);
         txtEndDate.setText(strEndDate);
@@ -116,10 +115,6 @@ public class TravelPackageController {
         txtBasePrice.setText(strPrice);
         txtAgencyCommission.setText(strCommission);
     }
-
-    /*public void clearFormFields() {
-        // clear all text fields
-    }*/ //!!! will decide later whether this method is needed
 
     @FXML
     private void btnCancelClicked(){    //close add/edit window
