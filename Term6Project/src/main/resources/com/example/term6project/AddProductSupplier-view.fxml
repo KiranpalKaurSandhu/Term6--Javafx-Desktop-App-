@@ -11,7 +11,7 @@
       <ComboBox fx:id="cmbProducts" layoutX="27.0" layoutY="39.0" prefHeight="26.0" prefWidth="200.0" promptText="Select Product" />
       <ComboBox fx:id="cmbSuppliers" layoutX="27.0" layoutY="91.0" prefHeight="26.0" prefWidth="200.0" promptText="Select Supplier" />
       <Button fx:id="btnSave" layoutX="27.0" layoutY="143.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="84.0" text="Save" />
-      <Button fx:id="btnCancel" layoutX="127.0" layoutY="143.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="94.0" text="Cancel" />
+      <Button fx:id="btnCancel" layoutX="127.0" layoutY="143.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="94.0" onAction="#btnCancelClicked" text="Cancel" />
       <TableView fx:id="tvProductSupplier" layoutX="232.0" layoutY="39.0" prefHeight="342.0" prefWidth="395.0">
         <columns>
           <TableColumn fx:id="colProductSupplierId" prefWidth="119.20001220703125" text="ProductSupplierId" />
