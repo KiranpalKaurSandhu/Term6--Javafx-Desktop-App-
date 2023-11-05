@@ -1,10 +1,15 @@
-
+/*Authored by Greg Bevington, Fall 2023. This file includes the code for adding and updating rows in the
+* database "travel packages" table. Along with those functions, controls for exiting the window, and filters for
+* all user input. */
 package com.example.term6project;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -18,6 +23,10 @@ import java.util.Date;
 import static java.lang.Integer.parseInt;
 
 public class TravelPackageController {
+    @FXML
+    public DatePicker dpEndDate;
+    @FXML
+    private DatePicker dpStartDate;
     private String mode;
     private DashboardController mainController;
     public void setMainController(DashboardController mainController) {
@@ -68,11 +77,10 @@ public class TravelPackageController {
         assert txtAgencyCommission != null : "fx:id=\"txtAgencyCommission\" was not injected: check your FXML file 'AddPackage-view.fxml'.";
         assert txtBasePrice != null : "fx:id=\"txtBasePrice\" was not injected: check your FXML file 'AddPackage-view.fxml'.";
         assert txtDescription != null : "fx:id=\"txtDescription\" was not injected: check your FXML file 'AddPackage-view.fxml'.";
-        assert txtEndDate != null : "fx:id=\"txtEndDate\" was not injected: check your FXML file 'AddPackage-view.fxml'.";
         assert txtPackageId != null : "fx:id=\"txtPackageId\" was not injected: check your FXML file 'AddPackage-view.fxml'.";
         assert txtPackageName != null : "fx:id=\"txtPackageName\" was not injected: check your FXML file 'AddPackage-view.fxml'.";
-        assert txtStartDate != null : "fx:id=\"txtStartDate\" was not injected: check your FXML file 'AddPackage-view.fxml'.";
-
+        assert dpStartDate != null ;
+        assert dpEndDate != null ;
         // set add mode as default
         mode = "add";
     }
@@ -84,16 +92,9 @@ public class TravelPackageController {
         System.out.println("Mode: " + mode);
         if (mode.equals("edit")) {
             populateEditForm(currentPackage);
-        //!!! go back and check whether this is needed} else {
-            //clearFormFields(); // Clear the form fields for adding a new package
         }
     }
     public void populateEditForm(Packages currentPackage) {
-        //testing
-        System.out.println("Package Name: " + currentPackage.getPkgName());
-        System.out.println("Start Date: " + currentPackage.getPkgStartDate());
-        System.out.println("End Date: " + currentPackage.getPkgEndDate());
-
         //convert package ID to string
         String strPackageId = Integer.toString(currentPackage.getPackageId());
 
@@ -101,49 +102,57 @@ public class TravelPackageController {
         String strPrice = Double.toString(currentPackage.getPkgBasePrice());
         String strCommission = Double.toString(currentPackage.getPkgAgencyCommission());
 
-        //convert dates to strings
-        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd");
-        String strStartDate= formatter.format(currentPackage.getPkgStartDate());
-        String strEndDate= formatter.format(currentPackage.getPkgEndDate());
-
-
+        // set text fields
         txtPackageId.setText(strPackageId);
         txtPackageName.setText(currentPackage.getPkgName());
-        txtStartDate.setText(strStartDate);
-        txtEndDate.setText(strEndDate);
         txtDescription.setText(currentPackage.getPkgDesc());
         txtBasePrice.setText(strPrice);
         txtAgencyCommission.setText(strCommission);
+
+        //Convert SQL Date to LocalDate and set date pickers
+        java.util.Date utilStartDate = currentPackage.getPkgStartDate();
+        java.sql.Date sqlStartDate = new java.sql.Date(utilStartDate.getTime());
+
+        java.util.Date utilEndDate = currentPackage.getPkgEndDate();
+        java.sql.Date sqlEndDate = new java.sql.Date(utilEndDate.getTime());
+
+        dpStartDate.setValue(sqlStartDate.toLocalDate());
+        dpEndDate.setValue(sqlEndDate.toLocalDate());
+
     }
 
     @FXML
     private void btnCancelClicked(){    //close add/edit window
         Stage stage = (Stage) btnCancel.getScene().getWindow();
         stage.close();
-
-        //!!! add confirmation dialog
     }
 
     @FXML
     private void btnSaveClicked(){
-        // Check if mainController is not null before calling refreshPackageList    !!! testing
+        // Check if mainController is not null before calling refreshPackageList
         if (this.mainController != null) {
             this.mainController.refreshPackageList();
         }
 
-        // collect text field data
+        // collect text field and date picker data
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         String packageName = txtPackageName.getText();
-        String startDate = txtStartDate.getText();
-        String endDate = txtEndDate.getText();
         String description = txtDescription.getText();
         String basePrice = txtBasePrice.getText();
         String agencyCommission = txtAgencyCommission.getText();
 
+        LocalDate startDate = dpStartDate.getValue();
+        LocalDate endDate = dpEndDate.getValue();
+
+        //reformat dates to strings for use in SQL
+        String startDateString = startDate.format(dateFormatter);
+        String endDateString = endDate.format(dateFormatter);
+
         //confirm whether user wishes to save
         if (showConfirmationDialog("Save", "Are you sure you want to save these changes?")) {
             if (isValidString(packageName, "package Name")&&
-            isValidDate(startDate) &&
-            isValidDate(endDate)&&
                     isLaterThan(endDate, startDate) &&
                     isValidString(description, "description")&&
                     isValidDouble("Base Price", basePrice)&&
@@ -175,8 +184,8 @@ public class TravelPackageController {
                     PreparedStatement stmt = conn.prepareStatement(sql);
                     // Set parameters based on the SQL statement
                     stmt.setString(1, packageName);
-                    stmt.setString(2, startDate);
-                    stmt.setString(3, endDate);
+                    stmt.setString(2, startDateString);
+                    stmt.setString(3, endDateString);
                     stmt.setString(4, description);
                     stmt.setDouble(5, basePriceDouble);
                     stmt.setDouble(6, agencyCommissionDouble);
@@ -185,10 +194,9 @@ public class TravelPackageController {
                     if (mode.equals("edit")) {
                         try {
                             int packageId = parseInt(txtPackageId.getText());
-                            stmt.setInt(7, parseInt(txtPackageId.getText()));  // !!! is this the right parameter index
+                            stmt.setInt(7, parseInt(txtPackageId.getText()));
                         } catch (NumberFormatException e) {
-                            System.out.println("Package ID: " + txtPackageId.getText());// !!! testing
-                            System.err.println("Invalid package ID input.");
+                            System.out.println("Package ID error. Packaged ID is currently: " + txtPackageId.getText());
                             return;
                         }
                     }
@@ -216,9 +224,6 @@ public class TravelPackageController {
                 successNotification();
 
             }
-        }
-        else {
-            // !!!notify user that save has been cancelled?
         }
     }
     private void closeDialog() {
@@ -279,7 +284,6 @@ public class TravelPackageController {
 
         alert.showAndWait().ifPresent(response -> {
             if (response == okButton){
-                //!!!!
             }
         });
         return (alert.getResult() == okButton);
@@ -302,11 +306,11 @@ public class TravelPackageController {
         String datePattern = "\\d{4}-\\d{2}-\\d{2}";
 
         if (date == null){
-            failureNotification("Package failed to save. Date  field must not be empty.");
+            failureNotification("Package failed to save. Date field must not be empty.");
             return false;
         }
         else if(!date.matches(datePattern)){
-            failureNotification("Package failed to save. Date must be in YYYY-MM-dd format.");
+            failureNotification("Package failed to save. Dates must be in YYYY-MM-dd format.");
             return false;
         }
         else{
@@ -314,27 +318,16 @@ public class TravelPackageController {
         }
     }
 
-    private boolean isLaterThan(String endDate, String startDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-        try {
-            Date dateEndDate = sdf.parse(endDate);
-            Date dateStartDate = sdf.parse(startDate);
-
-            if (dateEndDate.compareTo(dateStartDate) > 0) {
-                return true;
-            } else if (dateEndDate.compareTo(dateStartDate) < 0) {
-                failureNotification("Package failed to save. End date must be later than start date (maybe you've swapped their places?).");
-                return false;
-            } else {
-                failureNotification("Package failed to save. End date must be later than start date (they are currently set to the same date).");
-                return false;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+    private boolean isLaterThan(LocalDate endDate, LocalDate startDate) {
+        if (endDate.isAfter(startDate)){
+            return true;
+        } else if (endDate.isBefore(startDate)){
+            failureNotification("Package failed to save. End date must be later than start date (maybe you've swapped their places?).");
+            return false;
+        } else {
+            failureNotification("Package failed to save. End date must be later than start date (they are currently set to the same date).");
+            return false;
         }
-        failureNotification("Date input is of the wrong type. Please re-enter in YYYY-MM-dd format.");
-        return false;
     }
 
 
@@ -359,7 +352,7 @@ public class TravelPackageController {
    private Properties getProperties() {
         FileInputStream fis = null;
         try {
-            fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");  //!!! edit for users machine
+            fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");  //!!! edit for users machine
 
             Properties properties = new Properties();
             properties.load(fis);
