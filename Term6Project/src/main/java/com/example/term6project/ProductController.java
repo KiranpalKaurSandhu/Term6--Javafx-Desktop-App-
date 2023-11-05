@@ -17,7 +17,9 @@ import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -91,7 +93,7 @@ public class ProductController {
     // Load database connection properties from a properties file
     private Properties getProperties() {
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
             Properties properties = new Properties();
             properties.load(fis);
             return properties;
@@ -103,42 +105,40 @@ public class ProductController {
 
     // Handle the save button click event
     private void btnSaveClicked(MouseEvent mouseEvent) {
-        Properties p = getProperties();
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection((String) p.get("url"), p);
-            String sql = "";
-            if(mode.equals("edit"))
-            {
-                sql = "UPDATE `products` SET `ProdName`=? WHERE ProductId =?";;
+        if (isNotNull(tfProductName.getText())) {
+            Properties p = getProperties();
+            Connection conn = null;
+            try {
+                conn = DriverManager.getConnection((String) p.get("url"), p);
+                String sql = "";
+                if (mode.equals("edit")) {
+                    sql = "UPDATE `products` SET `ProdName`=? WHERE ProductId =?";
+                    ;
 
-            }
-            else{
-                sql = "INSERT INTO `products`( `ProdName`) VALUES (?)";
-            }
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, tfProductName.getText());
+                } else {
+                    sql = "INSERT INTO `products`( `ProdName`) VALUES (?)";
+                }
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setString(1, tfProductName.getText());
 
-            if(mode.equals("edit"))
-            {
-                stmt.setInt(2, Integer.parseInt(tfProductId.getText()));
-            }
-            int numRows = stmt.executeUpdate();
-            if(numRows == 0)
-            {
-                System.out.println("Save Failed.");
-            }
-            else {
-                System.out.println("Data saved Successfully.");
-            }
-            conn.close();
-            // Close the dialog window when the save operation is successful
-            closeDialog();
+                if (mode.equals("edit")) {
+                    stmt.setInt(2, Integer.parseInt(tfProductId.getText()));
+                }
+                int numRows = stmt.executeUpdate();
+                if (numRows == 0) {
+                    System.out.println("Save Failed.");
+                } else {
+                    System.out.println("Data saved Successfully.");
+                }
+                conn.close();
+                // Close the dialog window when the save operation is successful
+                closeDialog();
 
-            // Refresh the product list in the dashboard
-            mainController.refreshProductList();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                // Refresh the product list in the dashboard
+                mainController.refreshProductList();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -157,5 +157,49 @@ public class ProductController {
         btnCancel.getScene().getWindow().hide();
     }
 
+    /*Following filter authored by Greg Bevington*/
+    private boolean isNotNull(String string){
+        if(string.isEmpty()){
+            failureNotification();
+            return false;
+        }
+        else{
+            successNotification();
+            return true;
+        }
+    }
+
+    private void failureNotification(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Product failed to save.");
+        alert.setHeaderText("Product failed to save. Name field must not be blank.");
+        //button label
+        ButtonType okButton = new ButtonType("OK");
+        alert.getButtonTypes().setAll(okButton);
+
+        //user response
+        alert.showAndWait().ifPresent(response ->{
+            if (response == okButton){
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.close();
+            }
+        });
+    }
+    private void successNotification(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Changes saved.");
+        alert.setHeaderText("Product saved successfully.");
+        //button label
+        ButtonType okButton = new ButtonType("OK");
+        alert.getButtonTypes().setAll(okButton);
+
+        //user response
+        alert.showAndWait().ifPresent(response ->{
+            if (response == okButton){
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.close();
+            }
+        });
+    }
 
 }
