@@ -157,7 +157,7 @@ public class ProductController {
         btnCancel.getScene().getWindow().hide();
     }
 
-    /*Following filter authored by Greg Bevington*/
+    /*Following filter and message boxes authored by Greg Bevington*/
     private boolean isNotNull(String string){
         if(string.isEmpty()){
             failureNotification();
