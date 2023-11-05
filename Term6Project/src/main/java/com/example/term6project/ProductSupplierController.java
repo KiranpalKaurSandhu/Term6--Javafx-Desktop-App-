@@ -27,6 +27,8 @@ Author : Kiranpal Kaur
 Description : This is the controller class for managing the relationship between products and suppliers
  in a JavaFX application. It allows users to associate products with suppliers and displays the existing
   relationships.
+
+ (Save functions and buttons authored by Greg Bevington)
 */
 public class ProductSupplierController {
 
@@ -179,31 +181,6 @@ public class ProductSupplierController {
         }
     }
 
-    // Save the product-supplier relationship to the database
-    private void saveProductSupplier(Product selectedProduct, Supplier selectedSupplier) {
-        Properties p = getProperties();
-        Connection conn = null;
-
-        try {
-            conn = DriverManager.getConnection((String) p.get("url"), p);
-
-            // For adding, use INSERT statement without specifying ProductSupplierId
-            String sql = "INSERT INTO `products_suppliers`(`ProductId`, `SupplierId`) VALUES (?, ?)";
-
-
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                stmt.setInt(1, selectedProduct.getProductId());
-                stmt.setInt(2, selectedSupplier.getSupplierId());
-                stmt.executeUpdate();
-
-            System.out.println("Product Supplier saved with product id: "+selectedProduct.getProductId()+", and supplier id: "+selectedSupplier.getSupplierId());
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
     // Retrieve database connection properties from a file
     private Properties getProperties() {
         try {
@@ -251,6 +228,30 @@ public class ProductSupplierController {
             }
             conn.close();
         } catch (IOException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Save the product-supplier relationship to the database
+    private void saveProductSupplier(Product selectedProduct, Supplier selectedSupplier) {
+        Properties p = getProperties();
+        Connection conn = null;
+
+        try {
+            conn = DriverManager.getConnection((String) p.get("url"), p);
+
+            // For adding, use INSERT statement without specifying ProductSupplierId
+            String sql = "INSERT INTO `products_suppliers`(`ProductId`, `SupplierId`) VALUES (?, ?)";
+
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, selectedProduct.getProductId());
+            stmt.setInt(2, selectedSupplier.getSupplierId());
+            stmt.executeUpdate();
+
+            System.out.println("Product Supplier saved with product id: "+selectedProduct.getProductId()+", and supplier id: "+selectedSupplier.getSupplierId());
+
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
