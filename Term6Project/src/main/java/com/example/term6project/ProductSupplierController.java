@@ -9,8 +9,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.HashSet;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -101,8 +103,6 @@ public class ProductSupplierController {
                     // Clear the ComboBox selections
                     cmbProducts.getSelectionModel().clearSelection();
                     cmbSuppliers.getSelectionModel().clearSelection();
-                    // Refresh the TableView with updated data
-                    getProductsSupplier();
 
                 }
             }
@@ -121,7 +121,7 @@ public class ProductSupplierController {
         String password = "";
 
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
             Properties p = new Properties();
             p.load(fis);
             url = (String) p.get("url");
@@ -155,7 +155,7 @@ public class ProductSupplierController {
         String password = "";
 
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
             Properties p = new Properties();
             p.load(fis);
             url = (String) p.get("url");
@@ -186,42 +186,20 @@ public class ProductSupplierController {
 
         try {
             conn = DriverManager.getConnection((String) p.get("url"), p);
-            String sql = "";
 
-            if (mode.equals("edit")) {
-                // For editing, you should use UPDATE statement
-                sql = "UPDATE `products_suppliers` SET `ProductId`=?, `SupplierId`=? WHERE `ProductSupplierId`=?";
-            } else {
-                // For adding, use INSERT statement without specifying ProductSupplierId
-                sql = "INSERT INTO `products_suppliers`(`ProductId`, `SupplierId`) VALUES (?,?)";
-            }
+            // For adding, use INSERT statement without specifying ProductSupplierId
+            String sql = "INSERT INTO `products_suppliers`(`ProductId`, `SupplierId`) VALUES (?, ?)";
 
-            try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
-                if (mode.equals("edit")) {
-                    // In edit mode, you should set the values and ProductSupplierId
-                    preparedStatement.setInt(1, selectedProduct.getProductId());
-                    preparedStatement.setInt(2, selectedSupplier.getSupplierId());
-                } else {
-                    // In add mode, you only need to set the ProductId and SupplierId
-                    preparedStatement.setInt(1, selectedProduct.getProductId());
-                    preparedStatement.setInt(2, selectedSupplier.getSupplierId());
-                }
 
-                // Execute the SQL statement
-                preparedStatement.executeUpdate();
-            }
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, selectedProduct.getProductId());
+                stmt.setInt(2, selectedSupplier.getSupplierId());
+                stmt.executeUpdate();
+
+            System.out.println("Product Supplier saved with product id: "+selectedProduct.getProductId()+", and supplier id: "+selectedSupplier.getSupplierId());
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            // Close the connection in a final block
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    // Handle the exception or log it
-                    throw new RuntimeException(e);
-                }
-            }
         }
     }
 
@@ -229,7 +207,7 @@ public class ProductSupplierController {
     // Retrieve database connection properties from a file
     private Properties getProperties() {
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
             Properties properties = new Properties();
             properties.load(fis);
             return properties;
@@ -241,15 +219,13 @@ public class ProductSupplierController {
     // Load and display the list of product-supplier relationships from the database.
     private void getProductsSupplier() {
         productSupplierData.clear();
-        cmbProducts.getItems().clear();
-        cmbSuppliers.getItems().clear();
 
         String url = "";
         String user = "";
         String password = "";
 
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\Kiran\\Documents\\connection.properties");
+            FileInputStream fis = new FileInputStream("C:\\Users\\PC1\\Documents\\connection.properties");
             Properties p = new Properties();
             p.load(fis);
             url = (String) p.get("url");
@@ -267,18 +243,16 @@ public class ProductSupplierController {
                 String productName = rs.getString("prodName");
                 String supplierName = rs.getString("supName");
 
-                productSupplierData.add(new ProductSupplier(productSupplierId, productName, supplierName));
-                // Populate ComboBoxes directly
-                cmbProducts.getItems().add(new Product(productSupplierId, productName));
-                cmbSuppliers.getItems().add(new Supplier(productSupplierId, supplierName));
+                ProductSupplier productSupplier = new ProductSupplier(productSupplierId, productName, supplierName);
+
+                //add productSupplier to list
+                productSupplierData.add(productSupplier);
+
             }
             conn.close();
-
-
         } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     // Handle the Save button click event.
@@ -304,7 +278,6 @@ public class ProductSupplierController {
         Stage stage = (Stage) btnCancel.getScene().getWindow();
         stage.close();
 
-        //!!! add confirmation dialog
     }
 
     // Show a confirmation dialog with the given title and content.
@@ -323,7 +296,6 @@ public class ProductSupplierController {
 
         alert.showAndWait().ifPresent(response -> {
             if (response == okButton) {
-                //!!!!
             }
         });
         return (alert.getResult() == okButton);
