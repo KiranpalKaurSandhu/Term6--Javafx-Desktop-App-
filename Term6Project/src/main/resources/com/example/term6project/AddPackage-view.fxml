@@ -1,7 +1,5 @@
-<!--Authored by Greg Bevington, Fall 2023. Layout for the applications add/edit packages window.-->
-
 <?xml version="1.0" encoding="UTF-8"?>
-
+<!--Authored by Greg Bevington, Fall 2023. Layout for the applications add/edit packages window.-->
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
