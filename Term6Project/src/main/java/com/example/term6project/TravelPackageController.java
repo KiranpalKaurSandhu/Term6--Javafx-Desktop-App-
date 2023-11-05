@@ -8,17 +8,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
-import java.text.SimpleDateFormat;//imported for start and end dates
-import java.text.ParseException;
-import java.util.Date;
 
 import static java.lang.Integer.parseInt;
 
